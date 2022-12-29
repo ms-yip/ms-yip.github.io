@@ -1,0 +1,221 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>食用nginx | 珊珊的小本子</title><meta name="author" content="ms.y,yeminshan@126.com"><meta name="copyright" content="ms.y"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="Nginx 是  一种轻量级的web服务器 设计思想是事件驱动的异步非阻塞处理（类node.js） 占用内存少、启动速度快、并发能力强 使用C语言开发 扩展性好，第三方插件非常多 在互联网项目中广泛应用  4大应用  动静分离  请求静态资源：直接从 nginx 服务器所设定的根目录路径去取对应的资"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://ms-yip.github.io/2020/09/25/%E9%A3%9F%E7%94%A8nginx/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":false,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '食用nginx',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-12-29 18:01:06'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.4.2"><link rel="alternate" href="/atom.xml" title="珊珊的小本子" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">78</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">20</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">11</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">珊珊的小本子</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">食用nginx</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2020-09-25T02:41:16.000Z" title="发表于 2020-09-25 10:41:16">2020-09-25</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-12-29T10:01:06.965Z" title="更新于 2022-12-29 18:01:06">2022-12-29</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="食用nginx"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>Nginx 是</p>
+<ul>
+<li>一种轻量级的web服务器</li>
+<li>设计思想是事件驱动的异步非阻塞处理（类node.js）</li>
+<li>占用内存少、启动速度快、并发能力强</li>
+<li>使用C语言开发</li>
+<li>扩展性好，第三方插件非常多</li>
+<li>在互联网项目中广泛应用</li>
+</ul>
+<p>4大应用</p>
+<ol>
+<li><p>动静分离</p>
+<p><img src="https://user-gold-cdn.xitu.io/2020/4/17/171867d175eae45f?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt="nginx"></p>
+<p>请求静态资源：直接从 nginx 服务器所设定的根目录路径去取对应的资源</p>
+<p>请求动态资源：转发给真实的后台（应用服务器，如图中的Tomcat）去处理。</p>
+</li>
+<li><p>反向代理</p>
+<p>代理服务器就是位于发起请求的客户端与原始服务器端之间的一台跳板服务器，正向代理可以隐藏客户端，反向代理可以隐藏原始服务器。</p>
+<p><strong>反向代理的作用</strong>：</p>
+<ol>
+<li>保障应用服务器的安全（增加一层代理，可以屏蔽危险攻击，更方便的控制权限）</li>
+<li>实现负载均衡</li>
+<li>实现跨域（号称是最简单的跨域方式）</li>
+</ol>
+</li>
+<li><p>负载均衡</p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/alterem/p/11490367.html">负载均衡实际应用</a></p>
+<p>随着业务的不断增长和用户的不断增多，一台服务已经满足不了系统要求了。这个时候就出现了服务器 <a target="_blank" rel="noopener" href="https://www.cnblogs.com/bhlsheji/p/4026296.html">集群</a>。</p>
+<p>在服务器集群中，Nginx 可以将接收到的客户端请求“均匀地”（严格讲并不一定均匀，可以通过设置权重）分配到这个集群中所有的服务器上。这个就叫做<strong>负载均衡</strong>。</p>
+<p><img src="https://user-gold-cdn.xitu.io/2020/4/17/171862efada16376?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt="负载均衡"></p>
+<p><strong>负载均衡的作用</strong></p>
+<ul>
+<li>分摊服务器集群压力</li>
+<li>保证客户端访问的稳定性</li>
+</ul>
+<p>前面也提到了，负载均衡可以解决分摊服务器集群压力的问题。除此之外，Nginx还带有<strong>健康检查</strong>（服务器心跳检查）功能，会定期轮询向集群里的所有服务器发送健康检查请求，来检查集群中是否有服务器处于异常状态。</p>
+<p>一旦发现某台服务器异常，那么在这以后代理进来的客户端请求都不会被发送到该服务器上（直健康检查发现该服务器已恢复正常），从而保证客户端访问的稳定性。</p>
+</li>
+<li><p>正向代理</p>
+<p>科学上网vpn（俗称<code>翻墙</code>）其实就是一个正向代理工具。</p>
+</li>
+</ol>
+<h3 id="Nginx的Master-Worker模式"><a href="#Nginx的Master-Worker模式" class="headerlink" title="Nginx的Master-Worker模式"></a>Nginx的Master-Worker模式</h3><p><img src="https://pic4.zhimg.com/80/v2-b24eb2b29b48f59883232a58392ddae3_720w.jpg" alt=""></p>
+<p>启动Nginx后，其实就是在80端口启动了Socket服务进行监听，如图所示，Nginx涉及Master进程和Worker进程。</p>
+<p>Master进程的作用：<strong>读取并验证配置文件nginx.conf；管理worker进程；</strong></p>
+<p>Worker进程的作用是：<strong>每一个Worker进程都维护一个线程（避免线程切换），处理连接和请求；注意Worker进程的个数由配置文件决定，一般和CPU个数相关（有利于进程切换），配置几个就有几个Worker进程。</strong></p>
+<h2 id="Nginx配置文件结构"><a href="#Nginx配置文件结构" class="headerlink" title="Nginx配置文件结构"></a>Nginx配置文件结构</h2><ul>
+<li>1、<strong>全局块</strong>：配置影响nginx全局的指令。一般有运行nginx服务器的用户组，nginx进程pid存放路径，日志存放路径，配置文件引入，允许生成worker process数等。</li>
+<li>2、<strong>events块</strong>：配置影响nginx服务器或与用户的网络连接。有每个进程的最大连接数，选取哪种事件驱动模型处理连接请求，是否允许同时接受多个网路连接，开启多个网络连接序列化等。</li>
+<li>3、<strong>http块</strong>：可以嵌套多个server，配置代理，缓存，日志定义等绝大多数功能和第三方模块的配置。如文件引入，mime-type定义，日志自定义，是否使用sendfile传输文件，连接超时时间，单连接请求数等。</li>
+<li>4、<strong>server块</strong>：配置虚拟主机的相关参数，一个http中可以有多个server。</li>
+<li>5、<strong>location块</strong>：配置请求的路由，以及各种页面的处理情况。</li>
+<li>注释: #</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">...              #全局块</span><br><span class="line"></span><br><span class="line">events &#123;         #events块</span><br><span class="line">   ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">http      #http块</span><br><span class="line">&#123;</span><br><span class="line">    ...   #http全局块</span><br><span class="line">    server        #server块</span><br><span class="line">    &#123; </span><br><span class="line">        ...       #server全局块</span><br><span class="line">        location [PATTERN]   #location块</span><br><span class="line">        &#123;</span><br><span class="line">            ...</span><br><span class="line">        &#125;</span><br><span class="line">        location [PATTERN] </span><br><span class="line">        &#123;</span><br><span class="line">            ...</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    server</span><br><span class="line">    &#123;</span><br><span class="line">      ...</span><br><span class="line">    &#125;</span><br><span class="line">    ...     #http全局块</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>示例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">########### 每个指令必须有分号结束。#################</span><br><span class="line">#user administrator administrators;  #配置用户或者组，默认为nobody nobody。</span><br><span class="line">#worker_processes 2;  #允许生成的进程数，默认为1</span><br><span class="line">#pid /nginx/pid/nginx.pid;   #指定nginx进程运行文件存放地址</span><br><span class="line">error_log log/error.log debug;  #制定日志路径，级别。这个设置可以放入全局块，http块，server块，级别以此为：debug|info|notice|warn|error|crit|alert|emerg</span><br><span class="line">events &#123;</span><br><span class="line">    accept_mutex on;   #设置网路连接序列化，防止惊群现象发生，默认为on</span><br><span class="line">    multi_accept on;  #设置一个进程是否同时接受多个网络连接，默认为off</span><br><span class="line">    #use epoll;      #事件驱动模型，select|poll|kqueue|epoll|resig|/dev/poll|eventport</span><br><span class="line">    worker_connections  1024;    #最大连接数，默认为512</span><br><span class="line">&#125;</span><br><span class="line">http &#123;</span><br><span class="line">    include       mime.types;   #文件扩展名与文件类型映射表</span><br><span class="line">    default_type  application/octet-stream; #默认文件类型，默认为text/plain</span><br><span class="line">    #access_log off; #取消服务日志    </span><br><span class="line">    log_format myFormat &#x27;$remote_addr–$remote_user [$time_local] $request $status $body_bytes_sent $http_referer $http_user_agent $http_x_forwarded_for&#x27;; #自定义格式</span><br><span class="line">    access_log log/access.log myFormat;  #combined为日志格式的默认值</span><br><span class="line">    sendfile on;   #允许sendfile方式传输文件，默认为off，可以在http块，server块，location块。</span><br><span class="line">    sendfile_max_chunk 100k;  #每个进程每次调用传输数量不能大于设定的值，默认为0，即不设上限。</span><br><span class="line">    keepalive_timeout 65;  #连接超时时间，默认为75s，可以在http，server，location块。</span><br><span class="line"></span><br><span class="line">    upstream mysvr &#123;   </span><br><span class="line">      server 127.0.0.1:7878;</span><br><span class="line">      server 192.168.10.121:3333 backup;  #热备</span><br><span class="line">    &#125;</span><br><span class="line">    error_page 404 https://www.baidu.com; #错误页</span><br><span class="line">    server &#123;</span><br><span class="line">        keepalive_requests 120; #单连接请求上限次数。</span><br><span class="line">        listen       4545;   #监听端口</span><br><span class="line">        server_name  127.0.0.1;   #监听地址       </span><br><span class="line">        location  ~*^.+$ &#123;       #请求的url过滤，正则匹配，~为区分大小写，~*为不区分大小写。</span><br><span class="line">           #root path;  #根目录</span><br><span class="line">           #index vv.txt;  #设置默认页</span><br><span class="line">           proxy_pass  http://mysvr;  #请求转向mysvr 定义的服务器列表</span><br><span class="line">           deny 127.0.0.1;  #拒绝的ip</span><br><span class="line">           allow 172.18.5.54; #允许的ip           </span><br><span class="line">        &#125; </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<p>备注：</p>
+<ol>
+<li><p>查看 nginx 进程情况  tasklist /fi “imagename eq nginx.exe”</p>
+</li>
+<li><p>启动 start nginx</p>
+</li>
+<li><p>关闭</p>
+<p>(1)输入nginx命令  nginx -s stop(快速停止nginx)  或  nginx -s quit(完整有序的停止nginx)</p>
+<p>(2)使用taskkill  taskkill /f /t /im nginx.exe</p>
+</li>
+<li><p>热更新：nginx -s reload</p>
+</li>
+<li><p><strong>注意事项：</strong></p>
+<ol>
+<li><p>location 路径问题：</p>
+<p>window下 分隔符是\</p>
+<p>linux下 分隔符是/</p>
+<p>而\t,\r\n,\r恰好是转义字符</p>
+<p>nginx配置文件是可以转义这些字符的,导致配置出错,出现了500问题</p>
+</li>
+</ol>
+</li>
+</ol>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://ms-yip.github.io">ms.y</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://ms-yip.github.io/2020/09/25/%E9%A3%9F%E7%94%A8nginx/">https://ms-yip.github.io/2020/09/25/%E9%A3%9F%E7%94%A8nginx/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://ms-yip.github.io" target="_blank">珊珊的小本子</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2020/11/13/promise/"><img class="prev-cover" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">promise</div></div></a></div><div class="next-post pull-right"><a href="/2020/08/04/vscode/"><img class="next-cover" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">vscode</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">ms.y</div><div class="author-info__description">珊珊的愿望就是有吃不完的小鱼干，还有吃不完的猪肉干牛肉干。所以在没有那么多吃的之前在这里都记着，挣到钱钱后换成喜欢的小鱼干哈</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">78</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">20</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">11</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/ms-yip"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Nginx%E7%9A%84Master-Worker%E6%A8%A1%E5%BC%8F"><span class="toc-number">1.</span> <span class="toc-text">Nginx的Master-Worker模式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Nginx%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84"><span class="toc-number"></span> <span class="toc-text">Nginx配置文件结构</span></a></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/12/29/%E9%A1%B5%E9%9D%A2%E8%B7%A8%E9%A1%B5%E9%80%9A%E4%BF%A1/" title="页面跨页通信"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="页面跨页通信"/></a><div class="content"><a class="title" href="/2022/12/29/%E9%A1%B5%E9%9D%A2%E8%B7%A8%E9%A1%B5%E9%80%9A%E4%BF%A1/" title="页面跨页通信">页面跨页通信</a><time datetime="2022-12-29T10:30:07.395Z" title="发表于 2022-12-29 18:30:07">2022-12-29</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/12/29/%E9%A1%B9%E7%9B%AE%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/" title="项目遇到的问题记录"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="项目遇到的问题记录"/></a><div class="content"><a class="title" href="/2022/12/29/%E9%A1%B9%E7%9B%AE%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/" title="项目遇到的问题记录">项目遇到的问题记录</a><time datetime="2022-12-29T10:30:07.395Z" title="发表于 2022-12-29 18:30:07">2022-12-29</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/12/29/%E8%AE%BE%E5%A4%87%E8%AE%BE%E6%96%BD%E4%BB%A3%E7%A0%81/" title="设备设施代码"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="设备设施代码"/></a><div class="content"><a class="title" href="/2022/12/29/%E8%AE%BE%E5%A4%87%E8%AE%BE%E6%96%BD%E4%BB%A3%E7%A0%81/" title="设备设施代码">设备设施代码</a><time datetime="2022-12-29T10:30:07.393Z" title="发表于 2022-12-29 18:30:07">2022-12-29</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/12/29/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/" title="文件上传"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="文件上传"/></a><div class="content"><a class="title" href="/2022/12/29/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/" title="文件上传">文件上传</a><time datetime="2022-12-29T10:30:07.392Z" title="发表于 2022-12-29 18:30:07">2022-12-29</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/12/29/%E6%89%B9%E5%A4%84%E7%90%86/" title="批处理"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="批处理"/></a><div class="content"><a class="title" href="/2022/12/29/%E6%89%B9%E5%A4%84%E7%90%86/" title="批处理">批处理</a><time datetime="2022-12-29T10:30:07.391Z" title="发表于 2022-12-29 18:30:07">2022-12-29</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By ms.y</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

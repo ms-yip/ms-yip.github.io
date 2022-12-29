@@ -1,0 +1,246 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>初嘗微前端 | 珊珊的小本子</title><meta name="author" content="ms.y,yeminshan@126.com"><meta name="copyright" content="ms.y"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="前言现有的微前端解决方案：  iframe 提供了浏览器原生的硬隔离方案，不论是样式隔离、js 隔离这类问题统统都能被完美解决缺点   主页面和 iframe 共享最大允许的 HTTP 链接数。iframe 阻塞主页面加载。浏览器的后退按钮无效隔离性无法被突破，导致应用间上下文无法被共享 2. 服务"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://ms-yip.github.io/2020/12/28/%E5%88%9D%E5%98%97%E5%BE%AE%E5%89%8D%E7%AB%AF/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":false,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '初嘗微前端',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-12-29 18:01:06'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.4.2"><link rel="alternate" href="/atom.xml" title="珊珊的小本子" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">78</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">20</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">11</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">珊珊的小本子</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">初嘗微前端</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2020-12-28T08:35:59.000Z" title="发表于 2020-12-28 16:35:59">2020-12-28</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-12-29T10:01:06.960Z" title="更新于 2022-12-29 18:01:06">2022-12-29</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="初嘗微前端"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>现有的微前端解决方案：</p>
+<ol>
+<li><p>iframe</p>
+<p>提供了浏览器原生的硬隔离方案，不论是样式隔离、js 隔离这类问题统统都能被完美解决<br>缺点</p>
+</li>
+</ol>
+<p>主页面和 iframe 共享最大允许的 HTTP 链接数。<br>iframe 阻塞主页面加载。<br>浏览器的后退按钮无效<br>隔离性无法被突破，导致应用间上下文无法被共享 2. 服务端模板组合</p>
+<p>通过 Nginx 服务器根据 url 路径动态设置要加载的模板：<br>优点</p>
+<p>实现简单<br>技术栈独立<br>缺点</p>
+<p>需要额外配置 Nginx<br>前后端分离不彻底</p>
+<p>3.微前端框架 single-spa</p>
+<p>single-spa 的实现原理并不难，从架构上来讲可以分为两部分：子应用和容器应用。</p>
+<p>子应用与传统的单页应用的区别在于</p>
+<ul>
+<li>不需要 HTML 入口文件，</li>
+<li>js 入口文件导出的模块，必须包括 bootstrap、mount 和 unmount 三个方法。</li>
+</ul>
+<p>容器应用主要负责注册应用，当 url 命中子应用的路由时激活并挂载子应用，或者当子应用不处于激活状态时，将子应用从页面中移除卸载。其核心方法有两个：</p>
+<ul>
+<li><code>registerApplication</code> 注册并下载子应用</li>
+<li><code>start</code> 启动处于激活状态的子应用。</li>
+</ul>
+<p>优点</p>
+<ul>
+<li>纯前端解决方案</li>
+<li>可以使用多种技术栈</li>
+<li>完善的生态</li>
+</ul>
+<p>缺点</p>
+<ul>
+<li>上手成本高</li>
+<li>需要改造现有应用</li>
+<li>跨应用的联调变得复杂</li>
+</ul>
+<h4 id="qiankun"><a href="#qiankun" class="headerlink" title="qiankun"></a>qiankun</h4><h5 id="1-配置子应用要点"><a href="#1-配置子应用要点" class="headerlink" title="1.配置子应用要点"></a>1.配置子应用要点</h5><ol>
+<li><p>导出相应的生命周期钩子</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// bootstrap 只会在微应用初始化的时候调用一次，下次重新进入时会直接调用 mount 钩子，不再重复触发 bootstrap</span></span><br><span class="line">   <span class="keyword">export</span> <span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">bootstrap</span>(<span class="params"></span>) &#123;&#125;</span><br><span class="line">   <span class="comment">// 每次进入都会调用 mount 方法，通常我们在这里触发应用的渲染方法</span></span><br><span class="line">   <span class="keyword">export</span> <span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">mount</span>(<span class="params">props</span>) &#123;&#125;</span><br><span class="line">   <span class="comment">// 应用每次 切出/卸载 会调用的方法,通常在这卸载微应用的应用实例</span></span><br><span class="line">   <span class="keyword">export</span> <span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">unmount</span>(<span class="params">props</span>) &#123;&#125;</span><br><span class="line">   <span class="comment">// 可选生命周期钩子，仅使用 loadMicroApp 方式加载微应用时生效</span></span><br><span class="line">   <span class="keyword">export</span> <span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">update</span>(<span class="params">props</span>) &#123;&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>配置为应用的打包工具</p>
+<p>// @TODO 导出为umd原因：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> packageName = <span class="built_in">require</span>(<span class="string">&#x27;./package.json&#x27;</span>).<span class="property">name</span>;</span><br><span class="line">   </span><br><span class="line">   <span class="variable language_">module</span>.<span class="property">exports</span> = &#123;</span><br><span class="line">     <span class="attr">output</span>: &#123;</span><br><span class="line">       <span class="attr">library</span>: <span class="string">`<span class="subst">$&#123;packageName&#125;</span>-[name]`</span>,</span><br><span class="line">       <span class="attr">libraryTarget</span>: <span class="string">&#x27;umd&#x27;</span>,</span><br><span class="line">       <span class="attr">jsonpFunction</span>: <span class="string">`webpackJsonp_<span class="subst">$&#123;packageName&#125;</span>`</span>,</span><br><span class="line">     &#125;,</span><br><span class="line">   &#125;;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>子应用必须支持跨域</p>
+<p>由于 qiankun 是通过 fetch 去获取子应用的引入的静态资源的，所以必须要求这些静态资源支持跨域</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">jsdevServer</span>: &#123;</span><br><span class="line">    <span class="attr">headers</span>: &#123;</span><br><span class="line">      <span class="string">&quot;Access-Control-Allow-Origin&quot;</span>: <span class="string">&quot;*&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>路由</p>
+<p>如果基站使用history模式，子站也是用相同的模式比较简单。</p>
+<p>并且需要进行改造路由拼接上子服务激活路径！</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> <span class="title class_">Router</span>(&#123;</span><br><span class="line">  <span class="attr">base</span>: <span class="variable language_">window</span>.<span class="property">__POWERED_BY_QIANKUN__</span> ? <span class="string">&quot;/subTemplate/&quot;</span> : <span class="string">&quot;/&quot;</span>,</span><br><span class="line">  <span class="attr">mode</span>: <span class="string">&quot;history&quot;</span>,</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ol>
+<p>   // @TODO  其他路由模式的组合有待探索</p>
+<h5 id="2-配置主应用要点"><a href="#2-配置主应用要点" class="headerlink" title="2. .配置主应用要点"></a>2. .配置主应用要点</h5><ol start="0">
+<li><p>初始化项目</p>
+</li>
+<li><p>安装qiankun</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install qiankun -s</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>页面添加微应用加载节点</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;yourContainer&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>注册微应用并启动</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; registerMicroApps, start &#125; <span class="keyword">from</span> <span class="string">&#x27;qiankun&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="title function_">registerMicroApps</span>([</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&#x27;react app&#x27;</span>, <span class="comment">// app name registered</span></span><br><span class="line">    <span class="attr">entry</span>: <span class="string">&#x27;//localhost:7100&#x27;</span>,</span><br><span class="line">    <span class="attr">container</span>: <span class="string">&#x27;#yourContainer&#x27;</span>,</span><br><span class="line">    <span class="attr">activeRule</span>: <span class="string">&#x27;/yourActiveRule&#x27;</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&#x27;child1&#x27;</span>,</span><br><span class="line">    <span class="attr">entry</span>: <span class="string">&#x27;//localhost:8081&#x27;</span>, <span class="comment">// 默认会加载这个html 解析里面的js 动态执行（子应用必须支持跨域）</span></span><br><span class="line">    <span class="attr">container</span>: <span class="string">&#x27;#child1&#x27;</span>, <span class="comment">// 容器名</span></span><br><span class="line">    <span class="attr">activeRule</span>: <span class="string">&#x27;/child1&#x27;</span> <span class="comment">// 激活路径</span></span><br><span class="line">  &#125;,</span><br><span class="line">]);</span><br><span class="line"><span class="comment">// 启动默认应用</span></span><br><span class="line"><span class="title function_">setDefaultMountApp</span>(<span class="string">&#x27;/child1&#x27;</span>)</span><br><span class="line"><span class="title function_">start</span>(&#123; <span class="attr">prefetch</span>: <span class="literal">true</span> &#125;);</span><br></pre></td></tr></table></figure>
+
+<p>备注： 如果子应用是在子路由上加载，自应用上的路由都需要在主应用上注册！</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">// 子应用自路由路由注册  采用通配符*批量注册</span><br><span class="line">[</span><br><span class="line">    // 若子应用/路由有设置，必须多加一个单独的路由</span><br><span class="line">	&#123;</span><br><span class="line">          path: &quot;/subTemplate&quot;,</span><br><span class="line">          component: null,</span><br><span class="line">          name: &quot;subTemplatehello&quot;,</span><br><span class="line">          meta: &#123;</span><br><span class="line">            title: &quot;subTemplate&quot;</span><br><span class="line">          &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">          path: &quot;/subTemplate/*&quot;,</span><br><span class="line">          component: null,</span><br><span class="line">          name: &quot;subTemplatehello&quot;,</span><br><span class="line">          meta: &#123;</span><br><span class="line">            title: &quot;subTemplate&quot;</span><br><span class="line">          &#125;</span><br><span class="line">    &#125;</span><br><span class="line">]</span><br><span class="line">	</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ol>
+<h4 id="疑难杂症"><a href="#疑难杂症" class="headerlink" title="* 疑难杂症"></a>* 疑难杂症</h4><ol>
+<li><p>主项目多个子应用切换时，若出现加载出错，会导致页面加载出错</p>
+<p>复现步骤，demo 将路由匹配404 删除</p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://qiankun.umijs.org/zh/cookbook">路由选择</a></p>
+</li>
+</ol>
+<ol start="3">
+<li></li>
+</ol>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/mingyuanyunlian/article/details/108766703?utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromMachineLearnPai2%7Edefault-11.control&amp;dist_request_id=1619767681497_03396&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromMachineLearnPai2%7Edefault-11.control">https://blog.csdn.net/mingyuanyunlian/article/details/108766703?utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromMachineLearnPai2%7Edefault-11.control&amp;dist_request_id=1619767681497_03396&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromMachineLearnPai2%7Edefault-11.control</a></p>
+<h4 id="qiankun-API"><a href="#qiankun-API" class="headerlink" title="qiankun API"></a>qiankun API</h4><ol>
+<li><p>registerMicroApps(apps  Array<RegistrableApp>, lifeCycles <object> ?) 注册微应用的基础配置信息</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">RegistrableApp = &#123;</span><br><span class="line">	name: &#x27;&#x27;, // 必须，微应用的名称，唯一</span><br><span class="line">	entry: &#x27;&#x27;, // 必须，微应用的访问地址</span><br><span class="line">	container: &#x27;&#x27;, // 必须，挂载容器</span><br><span class="line">	activeRule : &#x27;&#x27;, // 必须，激活路径</span><br><span class="line">	loader: (loding:boolean) =&gt; void //loading 状态发生变化时会调用的方法</span><br><span class="line">	props: &lt;object&gt; // 主应用需要传递给微应用的数据</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">LifeCycles</span><br><span class="line">type Lifecycle = (app: RegistrableApp) =&gt; Promise&lt;any&gt;;</span><br><span class="line">beforeLoad - Lifecycle | Array&lt;Lifecycle&gt; - 可选</span><br><span class="line">beforeMount - Lifecycle | Array&lt;Lifecycle&gt; - 可选</span><br><span class="line">afterMount - Lifecycle | Array&lt;Lifecycle&gt; - 可选</span><br><span class="line">beforeUnmount - Lifecycle | Array&lt;Lifecycle&gt; - 可选</span><br><span class="line">afterUnmount - Lifecycle | Array&lt;Lifecycle&gt; - 可选</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>start(opts <object>?)  启动 qiankun</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">opts = &#123;</span><br><span class="line">	prefetch: true, // 是否开启预加载</span><br><span class="line">	sandbox: true, // 是否开启沙箱</span><br><span class="line">	singular: true, // 是否为单实例场景</span><br><span class="line">	fetch: () =&gt; &#123;&#125;, // 自定义的 fetch 方法</span><br><span class="line">	getPublicPath : (entry: Entry) =&gt; string , // 参数是微应用的 entry 值。</span><br><span class="line">	getTemplate : (tpl: string) =&gt; string , // </span><br><span class="line">	getTemplate : (assetUrl: string) =&gt; boolean, // 指定部分特殊的动态加载的微应用资源（css/js) 不被 qiankun 劫持处理。</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>setDefaultMountApp(appLink)  设置主应用启动后默认进入的微应用</p>
+</li>
+<li><p>runAfterFirstMounted(（）=&gt; void)  第一个微应用 mount 后需要调用的方法</p>
+</li>
+<li><p>addGlobalUncaughtErrorHandler((event) =&gt; void) 添加全局的未捕获异常处理器。</p>
+</li>
+<li><p>removeGlobalUncaughtErrorHandler((event) =&gt; void)  移除全局的未捕获异常处理器。</p>
+</li>
+<li><p>initGlobalState(state)</p>
+</li>
+</ol>
+<p><strong>qiankun 接入 原生html/js</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang=&quot;en&quot;&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">  &lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">  &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;</span><br><span class="line">  &lt;title&gt;Purehtml Example&lt;/title&gt;</span><br><span class="line">  &lt;script src=&quot;//cdn.bootcss.com/jquery/3.4.1/jquery.min.js&quot;&gt;</span><br><span class="line">  &lt;/script&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">  &lt;div style=&quot;display: flex; justify-content: center; align-items: center; height: 200px;&quot;&gt;</span><br><span class="line">    Purehtml Example</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">  &lt;div id=&quot;purehtml-container&quot; style=&quot;text-align:center&quot;&gt;&lt;/div&gt;</span><br><span class="line">  &lt;script src=&quot;//localhost:7104/entry.js&quot; entry&gt;&lt;/script&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">const render = $ =&gt; &#123;</span><br><span class="line">  $(&#x27;#purehtml-container&#x27;).html(&#x27;Hello, render with jQuery&#x27;);</span><br><span class="line">  return Promise.resolve();</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">(global =&gt; &#123;</span><br><span class="line">  global[&#x27;purehtml&#x27;] = &#123;</span><br><span class="line">    bootstrap: () =&gt; &#123;</span><br><span class="line">      console.log(&#x27;purehtml bootstrap&#x27;);</span><br><span class="line">      return Promise.resolve();</span><br><span class="line">    &#125;,</span><br><span class="line">    mount: () =&gt; &#123;</span><br><span class="line">      console.log(&#x27;purehtml mount&#x27;);</span><br><span class="line">      return render($);</span><br><span class="line">    &#125;,</span><br><span class="line">    unmount: () =&gt; &#123;</span><br><span class="line">      console.log(&#x27;purehtml unmount&#x27;);</span><br><span class="line">      return Promise.resolve();</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;)(window);</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://ms-yip.github.io">ms.y</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://ms-yip.github.io/2020/12/28/%E5%88%9D%E5%98%97%E5%BE%AE%E5%89%8D%E7%AB%AF/">https://ms-yip.github.io/2020/12/28/%E5%88%9D%E5%98%97%E5%BE%AE%E5%89%8D%E7%AB%AF/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://ms-yip.github.io" target="_blank">珊珊的小本子</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%BE%AE%E5%89%8D%E7%AB%AF/">微前端</a><a class="post-meta__tags" href="/tags/qiankun/">qiankun</a></div><div class="post_share"><div class="social-share" data-image="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2021/04/15/gitbook-%E5%88%9D%E4%BD%BF%E7%94%A8/"><img class="prev-cover" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">gitbook 初使用</div></div></a></div><div class="next-post pull-right"><a href="/2020/11/13/promise/"><img class="next-cover" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">promise</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">ms.y</div><div class="author-info__description">珊珊的愿望就是有吃不完的小鱼干，还有吃不完的猪肉干牛肉干。所以在没有那么多吃的之前在这里都记着，挣到钱钱后换成喜欢的小鱼干哈</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">78</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">20</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">11</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/ms-yip"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#qiankun"><span class="toc-number">1.0.0.1.</span> <span class="toc-text">qiankun</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-%E9%85%8D%E7%BD%AE%E5%AD%90%E5%BA%94%E7%94%A8%E8%A6%81%E7%82%B9"><span class="toc-number">1.0.0.1.1.</span> <span class="toc-text">1.配置子应用要点</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-%E9%85%8D%E7%BD%AE%E4%B8%BB%E5%BA%94%E7%94%A8%E8%A6%81%E7%82%B9"><span class="toc-number">1.0.0.1.2.</span> <span class="toc-text">2. .配置主应用要点</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%96%91%E9%9A%BE%E6%9D%82%E7%97%87"><span class="toc-number">1.0.0.2.</span> <span class="toc-text">* 疑难杂症</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#qiankun-API"><span class="toc-number">1.0.0.3.</span> <span class="toc-text">qiankun API</span></a></li></ol></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/12/29/%E9%A1%B5%E9%9D%A2%E8%B7%A8%E9%A1%B5%E9%80%9A%E4%BF%A1/" title="页面跨页通信"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="页面跨页通信"/></a><div class="content"><a class="title" href="/2022/12/29/%E9%A1%B5%E9%9D%A2%E8%B7%A8%E9%A1%B5%E9%80%9A%E4%BF%A1/" title="页面跨页通信">页面跨页通信</a><time datetime="2022-12-29T10:30:07.395Z" title="发表于 2022-12-29 18:30:07">2022-12-29</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/12/29/%E9%A1%B9%E7%9B%AE%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/" title="项目遇到的问题记录"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="项目遇到的问题记录"/></a><div class="content"><a class="title" href="/2022/12/29/%E9%A1%B9%E7%9B%AE%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/" title="项目遇到的问题记录">项目遇到的问题记录</a><time datetime="2022-12-29T10:30:07.395Z" title="发表于 2022-12-29 18:30:07">2022-12-29</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/12/29/%E8%AE%BE%E5%A4%87%E8%AE%BE%E6%96%BD%E4%BB%A3%E7%A0%81/" title="设备设施代码"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="设备设施代码"/></a><div class="content"><a class="title" href="/2022/12/29/%E8%AE%BE%E5%A4%87%E8%AE%BE%E6%96%BD%E4%BB%A3%E7%A0%81/" title="设备设施代码">设备设施代码</a><time datetime="2022-12-29T10:30:07.393Z" title="发表于 2022-12-29 18:30:07">2022-12-29</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/12/29/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/" title="文件上传"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="文件上传"/></a><div class="content"><a class="title" href="/2022/12/29/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/" title="文件上传">文件上传</a><time datetime="2022-12-29T10:30:07.392Z" title="发表于 2022-12-29 18:30:07">2022-12-29</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/12/29/%E6%89%B9%E5%A4%84%E7%90%86/" title="批处理"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="批处理"/></a><div class="content"><a class="title" href="/2022/12/29/%E6%89%B9%E5%A4%84%E7%90%86/" title="批处理">批处理</a><time datetime="2022-12-29T10:30:07.391Z" title="发表于 2022-12-29 18:30:07">2022-12-29</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By ms.y</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
