@@ -2,7 +2,14 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://ms-yip.github.io/2023/02/01/%E5%B8%B8%E7%94%A8%E9%93%BE%E6%8E%A5%E4%BB%BD%E6%8E%A5/</loc>
+    <loc>https://ms-yip.github.io/2020/04/08/zeplin%E4%BD%BF%E7%94%A8/</loc>
+    
+    <lastmod>2023-02-01T14:57:45.996Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://ms-yip.github.io/2023/02/01/%E5%B8%B8%E7%94%A8%E9%93%BE%E6%8E%A5%E5%A4%87%E4%BB%BD/</loc>
     
     <lastmod>2023-02-01T14:41:27.857Z</lastmod>
     
@@ -465,13 +472,6 @@
   
   <url>
     <loc>https://ms-yip.github.io/2020/07/09/websocket/</loc>
-    
-    <lastmod>2022-12-29T10:32:38.631Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://ms-yip.github.io/2020/04/08/zeplin%E4%BD%BF%E7%94%A8/</loc>
     
     <lastmod>2022-12-29T10:32:38.631Z</lastmod>
     
