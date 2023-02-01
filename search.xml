@@ -4,6 +4,19 @@
   
     
     <entry>
+      <title>常用链接备份</title>
+      <link href="/2023/02/01/%E5%B8%B8%E7%94%A8%E9%93%BE%E6%8E%A5%E4%BB%BD%E6%8E%A5/"/>
+      <url>/2023/02/01/%E5%B8%B8%E7%94%A8%E9%93%BE%E6%8E%A5%E4%BB%BD%E6%8E%A5/</url>
+      
+        <content type="html"><![CDATA[<p><a href="https://ms-yip.github.io/vuepress-doc-tpl/">vuepress 文档demo预览地址</a><br><a href="https://www.npmjs.com/package/vuepress-menu">vuepress demo项目自动生成nav导航菜单和sidebar侧边栏快捷定位菜单 npm包</a><br><a href="https://www.npmjs.com/package/vpsdoc-cli">快速生成vuepress 文档项目脚手架 npm包</a><br><a href="https://github.com/ms-yip/swg-doc-mocker">swg-doc-mocker-用于自动拉取swagger文档数据转换成nodemock数据接口</a></p>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>前端安全</title>
       <link href="/2023/01/29/%E5%89%8D%E7%AB%AF%E5%AE%89%E5%85%A8-1/"/>
       <url>/2023/01/29/%E5%89%8D%E7%AB%AF%E5%AE%89%E5%85%A8-1/</url>
