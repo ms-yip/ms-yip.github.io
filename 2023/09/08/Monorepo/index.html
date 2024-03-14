@@ -1,0 +1,203 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>Monorepo | 珊珊的小本子</title><meta name="author" content="ms.y,yeminshan@126.com"><meta name="copyright" content="ms.y"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="Monorepo 是一种项目代码管理方式，指单个仓库中管理多个项目，有助于简化代码共享、版本控制、构建和部署等方面的复杂性，并提供更好的可重用性和协作性。 发展过程：  Monolith（单体仓库应用程序） MultiRepo（多仓库多模块应用） MonoRepo（单仓库多模块应用）   12345"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://ms-yip.github.io/2023/09/08/Monorepo/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":false,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Monorepo',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-03-14 19:38:52'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.4.2"><link rel="alternate" href="/atom.xml" title="珊珊的小本子" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">113</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">34</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">19</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">珊珊的小本子</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Monorepo</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-09-08T02:50:22.000Z" title="发表于 2023-09-08 10:50:22">2023-09-08</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-03-14T11:38:52.791Z" title="更新于 2024-03-14 19:38:52">2024-03-14</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/monorepo/">monorepo</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Monorepo"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>Monorepo 是一种<strong>项目代码管理方式</strong>，指<strong>单个仓库</strong>中管理<strong>多个项目</strong>，有助于简化代码<strong>共享</strong>、版本控制、构建和部署等方面的复杂性，并提供更好的可重用性和协作性。</p>
+<p>发展过程：</p>
+<ul>
+<li>Monolith（单体仓库应用程序）</li>
+<li>MultiRepo（多仓库多模块应用）</li>
+<li>MonoRepo（单仓库多模块应用）</li>
+</ul>
+<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/14ba61eb924c4411bc4ff102f8f3f530~tplv-k3u1fbpfcp-jj-mark:3024:0:0:0:q75.awebp" alt="img"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">// package.json中增加如下配置</span><br><span class="line">&#123;</span><br><span class="line">  &quot;private&quot;: true,</span><br><span class="line">  &quot;workspaces&quot;: [&quot;app1&quot;, &quot;app2&quot;]</span><br><span class="line">  // 具名Workspace,名字任意，但需跟子项目中package.json中name属性值一致</span><br><span class="line">&#125;</span><br><span class="line">// 当Workspace很多时，也可以采用全目录引用的方式</span><br><span class="line">// 假设项目代码在projects目录下</span><br><span class="line">&#123;</span><br><span class="line">  &quot;private&quot;: true,</span><br><span class="line">  &quot;workspaces&quot;: [&quot;projects/*&quot;]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<ul>
+<li>建议使用pnpm 安装依赖，可以避免幽灵依赖。</li>
+</ul>
+<ol start="3">
+<li></li>
+</ol>
+<h2 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h2><ol>
+<li><p>使用yarn </p>
+<p>见github里面有详细步骤<a target="_blank" rel="noopener" href="https://github.com/ms-yip/monorepo-by-yarn/"><a target="_blank" rel="noopener" href="https://github.com/ms-yip/monorepo-by-yarn">monorepo-by-yarn</a></a></p>
+</li>
+<li><p>使用pnpm</p>
+<p>npm install -g pnpm 安装pnpm</p>
+<p>新建packages和 example文件夹，再新建 pnpm-workspace.yaml </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">packages:</span><br><span class="line">  # 存放组件库和其他工具库</span><br><span class="line">  - &#x27;packages/*&#x27;</span><br><span class="line">  # 存放组件测试的代码</span><br><span class="line">  - &#x27;example&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>在根目录中向 example 目录安装 sass</p>
+<p>–filter 或者 -F <package_name> 可以在指定目录 package 执行任务 </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pnpm -F example add sass</span><br></pre></td></tr></table></figure>
+
+<p>实践： <a target="_blank" rel="noopener" href="https://github.com/ms-yip/monorepo-by-pnpm">github demo</a></p>
+<p><a target="_blank" rel="noopener" href="https://juejin.cn/post/7210310775276716092">参考教程</a></p>
+</li>
+<li><p>使用npm （npm version &gt; 7）</p>
+</li>
+<li><p>pnpm + turbo </p>
+<p>Specify your packages in pnpm-workspace.yaml.</p>
+<p>pnpm-workspace.yaml</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">packages:</span><br><span class="line">  - &quot;packages/*&quot;</span><br><span class="line">  - &quot;apps/*&quot;</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ol>
+<ol>
+<li>pnpm install turbo –save-dev </li>
+<li>pnpm turbo build lint (可以运行多个)</li>
+<li>pnpm turbo dev</li>
+</ol>
+<h2 id="实践"><a href="#实践" class="headerlink" title="实践"></a>实践</h2><h3 id="pnpm搭建monorepo项目"><a href="#pnpm搭建monorepo项目" class="headerlink" title="pnpm搭建monorepo项目"></a>pnpm搭建monorepo项目</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">import &#123; defineConfig &#125; from &#x27;vite&#x27;</span><br><span class="line">import vue from &#x27;@vitejs/plugin-vue&#x27;</span><br><span class="line">import &#123; resolve &#125; from &#x27;path&#x27;</span><br><span class="line">import VueSetupExtend from &#x27;vite-plugin-vue-setup-extend&#x27;</span><br><span class="line"></span><br><span class="line">// https://vitejs.dev/config/</span><br><span class="line">export default defineConfig(&#123;</span><br><span class="line">  plugins: [vue(),VueSetupExtend()],</span><br><span class="line">  base: &#x27;./&#x27;,</span><br><span class="line">  build: &#123;</span><br><span class="line">    target: &#x27;modules&#x27;,</span><br><span class="line">    //打包文件目录</span><br><span class="line">    outDir: &#x27;es&#x27;,</span><br><span class="line">    //压缩</span><br><span class="line">    minify: true,</span><br><span class="line">    //css分离</span><br><span class="line">    //cssCodeSplit: true,</span><br><span class="line">    rollupOptions: &#123;</span><br><span class="line">      //忽略打包vue、element-plus @element-plus/icons-vue是element-plus图标相关的依赖 ,排除掉 scss是因为我们要在组件中引入element-plus的样式，但是这个样式也要从外部项目的element-plus依赖中获取</span><br><span class="line">    external: [&#x27;vue&#x27;, &#x27;element-plus&#x27;, &#x27;@element-plus/icons-vue&#x27;, /\.scss/],</span><br><span class="line">      input: [&#x27;index.js&#x27;],</span><br><span class="line">      output: [</span><br><span class="line">        &#123;</span><br><span class="line">          format: &#x27;es&#x27;,</span><br><span class="line">          //不用打包成.es.js,这里我们想把它打包成.js</span><br><span class="line">          entryFileNames: &#x27;[name].js&#x27;,</span><br><span class="line">          //让打包目录和我们目录对应</span><br><span class="line">          preserveModules: true,</span><br><span class="line">          exports: &#x27;named&#x27;,</span><br><span class="line">          //配置打包根目录</span><br><span class="line">          dir: resolve(__dirname, &#x27;./ui/es&#x27;),</span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">          format: &#x27;cjs&#x27;,</span><br><span class="line">          entryFileNames: &#x27;[name].js&#x27;,</span><br><span class="line">          //让打包目录和我们目录对应</span><br><span class="line">          preserveModules: true,</span><br><span class="line">          exports: &#x27;named&#x27;,</span><br><span class="line">          //配置打包根目录</span><br><span class="line">          dir: resolve(__dirname, &#x27;./ui/lib&#x27;),</span><br><span class="line">        &#125;,</span><br><span class="line">      ],</span><br><span class="line">    &#125;,</span><br><span class="line">    lib: &#123;</span><br><span class="line">      entry: &#x27;./index.js&#x27;,</span><br><span class="line">      name: &#x27;shuge&#x27;,</span><br><span class="line">      formats: [&#x27;es&#x27;, &#x27;cjs&#x27;],</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;name&quot;: &quot;@vmkt/shuge-ui&quot;,</span><br><span class="line">  // 代表我们这个组件库需要对外发布</span><br><span class="line">  &quot;private&quot;: false,</span><br><span class="line">  &quot;version&quot;: &quot;0.0.1&quot;,</span><br><span class="line">  // 使用 require(&#x27;xxx&#x27;) 方式引入时</span><br><span class="line">  &quot;main&quot;: &quot;./ui/lib/index.js&quot;,</span><br><span class="line">  // 使用 import x from &#x27;xxx&#x27; 方式引入组件时</span><br><span class="line">  &quot;module&quot;: &quot;./ui/es/index.js&quot;,</span><br><span class="line">  &quot;type&quot;: &quot;module&quot;,</span><br><span class="line">  // 配置打包上传文件到npm的文件夹内容</span><br><span class="line">  &quot;files&quot;: [</span><br><span class="line">    &quot;ui&quot;</span><br><span class="line">  ],</span><br><span class="line">  &quot;scripts&quot;: &#123;</span><br><span class="line">    &quot;dev&quot;: &quot;vite&quot;,</span><br><span class="line">    &quot;build&quot;: &quot;vite build&quot;,</span><br><span class="line">    &quot;preview&quot;: &quot;vite preview&quot;</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;dependencies&quot;: &#123;</span><br><span class="line">    &quot;element-plus&quot;: &quot;^2.3.0&quot;,</span><br><span class="line">    &quot;vue&quot;: &quot;^3.2.47&quot;</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;devDependencies&quot;: &#123;</span><br><span class="line">    &quot;@vitejs/plugin-vue&quot;: &quot;^4.1.0&quot;,</span><br><span class="line">    &quot;sass&quot;: &quot;^1.59.3&quot;,</span><br><span class="line">    &quot;vite&quot;: &quot;^4.2.0&quot;,</span><br><span class="line">    &quot;vite-plugin-vue-setup-extend&quot;: &quot;^0.4.0&quot;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>要引入组件，还需要引入基础样式和组件样式，这个需要的<code>element-plus</code>组件变多的话，非常麻烦。</p>
+<p>我们需要使用<code>unplugin-element-plus</code>帮助我们自动引入样式</p>
+<p>安装<code>unplugin-element-plus</code> 到组件库的包下</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">bash</span><br><span class="line">复制代码pnpm add unplugin-element-plus -D --filter components</span><br></pre></td></tr></table></figure>
+
+<p>在<code>vite</code>配置文件里添加下面配置</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">typescript</span><br><span class="line">复制代码<span class="comment">// /packages/components/vite.config.ts</span></span><br><span class="line"><span class="keyword">import</span> <span class="title class_">ElementPlus</span> <span class="keyword">from</span> <span class="string">&#x27;unplugin-element-plus/vite&#x27;</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="title function_">defineConfig</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    <span class="attr">plugins</span>: [</span><br><span class="line">      <span class="comment">// ...</span></span><br><span class="line">      <span class="title class_">ElementPlus</span>(&#123;</span><br><span class="line">        <span class="comment">// 导入scss而不是css</span></span><br><span class="line">        <span class="attr">useSource</span>: <span class="literal">true</span></span><br><span class="line">      &#125;),</span><br><span class="line">    ]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>配置好后，编写组件时只用向下面这样就行</p>
+<p>参考：</p>
+<p><a target="_blank" rel="noopener" href="https://juejin.cn/post/7212538330829996092">5分钟学会 pnpm monorepo+vue3+vite 搭建组件库</a></p>
+<p><a target="_blank" rel="noopener" href="https://developer.aliyun.com/article/1067018">Monorepo，大型前端项目管理模式实践</a></p>
+<p><a target="_blank" rel="noopener" href="https://juejin.cn/post/7215886869199896637">带你了解更全面的 Monorepo - 优劣、踩坑、选型</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/xgangzai/article/details/131733574?ydreferer=aHR0cHM6Ly93d3cuYmluZy5jb20v">了解并实践monorepo和pnpm</a></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://ms-yip.github.io">ms.y</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://ms-yip.github.io/2023/09/08/Monorepo/">https://ms-yip.github.io/2023/09/08/Monorepo/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://ms-yip.github.io" target="_blank">珊珊的小本子</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/monorepo/">monorepo</a><a class="post-meta__tags" href="/tags/%E4%BB%A3%E7%A0%81%E7%AE%A1%E7%90%86%E6%96%B9%E5%BC%8F/">代码管理方式</a></div><div class="post_share"><div class="social-share" data-image="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2023/09/13/turbo/"><img class="prev-cover" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">turbo</div></div></a></div><div class="next-post pull-right"><a href="/2023/09/08/workspace-%E5%BA%94%E7%94%A8/"><img class="next-cover" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">workspace 应用</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2024/03/06/lerna-monorepo-%E5%AE%9E%E8%B7%B5/" title="lerna monorepo 实践"><img class="cover" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-03-06</div><div class="title">lerna monorepo 实践</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">ms.y</div><div class="author-info__description">珊珊的愿望就是有吃不完的小鱼干，还有吃不完的猪肉干牛肉干。所以在没有那么多吃的之前在这里都记着，挣到钱钱后换成喜欢的小鱼干哈</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">113</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">34</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">19</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/ms-yip"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B"><span class="toc-number">1.</span> <span class="toc-text">案例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E8%B7%B5"><span class="toc-number">2.</span> <span class="toc-text">实践</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#pnpm%E6%90%AD%E5%BB%BAmonorepo%E9%A1%B9%E7%9B%AE"><span class="toc-number">2.1.</span> <span class="toc-text">pnpm搭建monorepo项目</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2024/03/07/%E4%BB%A3%E7%A0%81%E6%8F%90%E4%BA%A4%E7%AE%A1%E7%90%86%E8%A7%84%E8%8C%83/" title="代码提交管理规范"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="代码提交管理规范"/></a><div class="content"><a class="title" href="/2024/03/07/%E4%BB%A3%E7%A0%81%E6%8F%90%E4%BA%A4%E7%AE%A1%E7%90%86%E8%A7%84%E8%8C%83/" title="代码提交管理规范">代码提交管理规范</a><time datetime="2024-03-07T00:59:59.000Z" title="发表于 2024-03-07 08:59:59">2024-03-07</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/03/06/lerna-monorepo-%E5%AE%9E%E8%B7%B5/" title="lerna monorepo 实践"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="lerna monorepo 实践"/></a><div class="content"><a class="title" href="/2024/03/06/lerna-monorepo-%E5%AE%9E%E8%B7%B5/" title="lerna monorepo 实践">lerna monorepo 实践</a><time datetime="2024-03-06T08:50:04.000Z" title="发表于 2024-03-06 16:50:04">2024-03-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/02/19/EditorConfig/" title="EditorConfig"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="EditorConfig"/></a><div class="content"><a class="title" href="/2024/02/19/EditorConfig/" title="EditorConfig">EditorConfig</a><time datetime="2024-02-19T08:55:27.000Z" title="发表于 2024-02-19 16:55:27">2024-02-19</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/02/07/%E5%B7%A5%E7%A8%8B%E5%8C%96/" title="工程化"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="工程化"/></a><div class="content"><a class="title" href="/2024/02/07/%E5%B7%A5%E7%A8%8B%E5%8C%96/" title="工程化">工程化</a><time datetime="2024-02-07T05:32:31.378Z" title="发表于 2024-02-07 13:32:31">2024-02-07</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/12/08/hexo-%E6%90%AD%E5%BB%BA%E8%87%AA%E5%B7%B1%E5%8D%9A%E5%AE%A2%E5%BF%83%E5%BE%97/" title="hexo 搭建自己博客心得"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="hexo 搭建自己博客心得"/></a><div class="content"><a class="title" href="/2023/12/08/hexo-%E6%90%AD%E5%BB%BA%E8%87%AA%E5%B7%B1%E5%8D%9A%E5%AE%A2%E5%BF%83%E5%BE%97/" title="hexo 搭建自己博客心得">hexo 搭建自己博客心得</a><time datetime="2023-12-08T02:35:20.000Z" title="发表于 2023-12-08 10:35:20">2023-12-08</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By ms.y</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

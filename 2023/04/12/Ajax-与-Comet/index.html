@@ -1,0 +1,203 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>Ajax 与 Comet | 珊珊的小本子</title><meta name="author" content="ms.y,yeminshan@126.com"><meta name="copyright" content="ms.y"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="Comet：指的是一种更高级的 Ajax 技术(经常也有人称为“服务器推送”)。Ajax 是一种从页面向服务器请求数据的技术，Comet 是一种服务器向页面推送数据的技术。 有两种实现 Comet 的方式：长轮询和流。 1.长轮询长轮询是传统轮询(也称为短轮询)的一个翻版，即浏览器定时向服务器发送请"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://ms-yip.github.io/2023/04/12/Ajax-%E4%B8%8E-Comet/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":false,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Ajax 与 Comet',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-11-05 18:30:56'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.4.2"><link rel="alternate" href="/atom.xml" title="珊珊的小本子" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">113</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">34</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">19</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">珊珊的小本子</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Ajax 与 Comet</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-04-12T08:56:01.000Z" title="发表于 2023-04-12 16:56:01">2023-04-12</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-11-05T10:30:56.219Z" title="更新于 2023-11-05 18:30:56">2023-11-05</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Ajax 与 Comet"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>Comet：指的是一种更高级的 Ajax 技术(经常也有人称为“服务器推送”)。Ajax 是一种从页面向服务器请求数据的技术，Comet 是一种服务器向页面推送数据的技术。</p>
+<p>有两种实现 Comet 的方式：长轮询和流。</p>
+<p>1.长轮询<br>长轮询是传统轮询(也称为短轮询)的一个翻版，即浏览器定时向服务器发送请求，看有没有更新的数据。</p>
+<p>短轮询和长轮询的时间线：</p>
+<p><img src="https://img-blog.csdnimg.cn/20190814174610753.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2RhbmRhbjY2NmRhbmRhbg==,size_16,color_FFFFFF,t_70#" alt="短轮询"></p>
+<p><img src="https://img-blog.csdnimg.cn/2019081417482333.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2RhbmRhbjY2NmRhbmRhbg==,size_16,color_FFFFFF,t_70#" alt="长轮询"></p>
+<p>长轮询，页面发起一个到服务器的请求，然后服务器一直保持连接打开，直到有数据可发送。发送完数据之后，浏览器关闭连接，随即又发起一个到服务器的新请求。这一过程在页面打开期间一直持续不断。</p>
+<p>无论是短轮询还是长轮询，浏览器都要在接收数据之前，先发起对服务器的连接。<br>两者最大的区别：服务器如何发送数据。短轮询是服务器立即发送响应，无论数据是否有效，而长轮询是等待发送响应。<br>轮询的优势是所有浏览器都支持，因为使用 XHR 对象和 setTimeout() 就能实现。</p>
+<ol start="2">
+<li>HTTP流<br>第二种流行的 Comet 实现是 HTTP 流。<br>流不同于轮询，它在页面的整个生命周期内只使用一个 HTTP 连接。具体来说，就是浏览器向服务器发送一个请求，而服务器保持连接打开，然后周期性地向浏览器发送数据。</li>
+</ol>
+<p>所有服务器端语言都支持打印到输出缓存然后刷新(将输出缓存中的内容一次性全部发送到客户端)的功能。而这正是实现 HTTP 流的关键所在。</p>
+<p>在 Firefox、Safari、Opera 和 Chrome 中，通过侦听 readystatechange 事件及检测 readyState 的值是否为 3，就可以利用 XHR 对象实现 HTTP 流。</p>
+<p>服务器发送事件<br>SSE(Server-Sent Events，服务器发送事件)是围绕只读 Comet 交互推出的 API 或者模式。<br>SSE API 用于创建到服务器的单向连接，服务器通过这个连接可以发送任意数量的数据。服务器响应的 MIME 类型必须是 text/event-stream，而且是浏览器中的 JavaScript API 能解析格式输出。<br>SSE 支持短轮询、长轮询和 HTTP 流，而且能在断开连接时自动确定何时重新连接。<br>支持 SSE 的浏览器：Firefox 6+、Safari 5+、Opera 11+、Chrome 和 iOS 4+版 Safari。</p>
+<p>SSE API<br>要预订新的事件流，首先要创建一个新的 EventSource 对象，并传进一个入口点：<br>var source = new EventSource(“myevents.php”);<br>注意：传入的 URL 必须与创建对象的页面同源 (相同的 URL 模式、域及端口)。</p>
+<p>EventSource 的实例中的属性和方法：<br>一个属性：<br>readyState：值为 0 表示正连接到服务器，值为 1 表示打开了连接，值为 2 表示关闭了连接。<br>三个事件：<br>open：在建立连接时触发。<br>message：在从服务器接收到新事件时触发。<br>error：在无法建立连接时触发。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">source.onmessage = function(event)&#123; </span><br><span class="line">    var data = event.data;</span><br><span class="line">    //处理数据</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>服务器发回的数据以字符串形式保存在 event.data 中。</p>
+<p>默认情况下，EventSource 对象会保持与服务器的活动连接。如果连接断开，还会重新连接。意味着 SSE 适合长轮询和 HTTP 流。<br>如果想强制立即断开连接并且不再重新连接，可以调用 close() 方法。<br>source.close();</p>
+<p>所谓的服务器事件会通过一个持久的 HTTP 响应发送，这个响应的 MIME 类型为 text/event-stream。响应的格式是纯文本，最简单的情况是每个数据项都带有前缀 data: 。<br>只有在包含 data: 的数据行后面有空行时，才会触发 message 事件，因此在服务器上生成事件流时不能忘了多添加这一行。<br>通过 id:前缀可以给特定的事件指定一个关联的 ID，这个 ID 行位于 data:行前面或后面皆可。<br>设置了 ID 后，EventSource 对象会跟踪上一次触发的事件。如果连接断开，会向服务器发送一个包含名为 Last-Event-ID 的特殊 HTTP 头部的请求，以便服务器知道下一次该触发哪个事件。在多次连接的事件流中，这种机制可以确保浏览器以正确的顺序收到连接的数据段。</p>
+<h4 id="Web-Sockets-⭐️"><a href="#Web-Sockets-⭐️" class="headerlink" title="Web Sockets ⭐️"></a>Web Sockets ⭐️</h4><p>Web Sockets 的目标是在一个单独的持久连接上提供全双工、双向通信。<br>在 JavaScript 中创建了 Web Socket 之后，会有一个 HTTP 请求发送到浏览器以发起连接。在取得服务器响应后，建立的连接会使用 HTTP 升级从 HTTP 协议交换为 Web Socket 协议。<br>URL 模式：未加密的连接不是 http://，而是 ws://；加密的连接不是 https://，而是 wss://。</p>
+<p>使用自定义协议而非 HTTP 协议的好处：能够在客户端和服务器之间发送非常少量的数据，而不必担心 HTTP 那样字节级的开销。由于传递的数据包很小，因此 Web Sockets 非常适合移动应用。<br>使用自定义协议的缺点：制定协议的时间比制定 JavaScript API 的时间还要长。<br>支持 Web Sockets 的浏览器：Firefox 6+、Safari 5+、Chrome 和 iOS 4+版 Safari。</p>
+<p>Web Sockets API<br>创建 Web Socket，先实例一个 WebSocket 对象并传入要连接的 URL：<br>var socket = new WebSocket(“ws://<a target="_blank" rel="noopener" href="http://www.example.com/server.php&quot;">www.example.com/server.php&quot;</a>);<br>注意：必须给 WebSocket 构造函数传入绝对 URL。同源策略对 Web Sockets 不适用，因此可以通过它打开到任何站点的连接。</p>
+<p>WebSocket 也有一个表示当前状态的 readyState 属性：<br>WebSocket.OPENING (0)：正在建立连接。<br>WebSocket.OPEN (1)：已经建立连接。<br>WebSocket.CLOSING (2)：正在关闭连接。<br>WebSocket.CLOSE (3)：已经关闭连接。</p>
+<p>要关闭 Web Socket 连接，可以在任何时候调用 close() 方法。<br>socket.close();</p>
+<p>发送和接收数据<br>要向服务器发送数据，使用 send() 方法并传入任意字符串。<br>socket.send(“Hello world!”);<br>Web Sockets只能通过连接发送纯文本数据，对于复杂的数据结构，在通过连接发送之前，必须进行序列化。</p>
+<p>当服务器向客户端发来消息时，WebSocket 对象就会触发 message 事件。返回的数据保存在 event.data 属性中。</p>
+<p>其他事件<br>WebSocket 对象还有其他三个事件，在连接生命周期的不同阶段触发。<br>open：在成功建立连接时触发。<br>error：在发生错误时触发，连接不能持续。<br>close：在连接关闭时触发。</p>
+<p>WebSocket 对象不支持 DOM 2 级事件侦听器，必须使用 DOM 0 级语法分别定义每个事件处理程序。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> socket = <span class="keyword">new</span> <span class="title class_">WebSocket</span>(<span class="string">&quot;ws://www.example.com/server.php&quot;</span>);</span><br><span class="line">socket.<span class="property">onopen</span> = <span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="title function_">alert</span>(<span class="string">&quot;Connection established.&quot;</span>);</span><br><span class="line">&#125;;</span><br><span class="line">socket.<span class="property">onerror</span> = <span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="title function_">alert</span>(<span class="string">&quot;Connection error.&quot;</span>);</span><br><span class="line">&#125;;</span><br><span class="line">socket.<span class="property">onclose</span> = <span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="title function_">alert</span>(<span class="string">&quot;Connection closed.&quot;</span>);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>close 事件的 event 对象有三个额外的属性：wasClean、code 和 reason。<br>wasClean 是一个布尔值，表示连接是否已经明确地关闭；<br>code 是服务器返回的数值状态码；<br>reason 是一个字符串，包含服务器发回的消息。</p>
+<h3 id="SSE与Web-Sockets"><a href="#SSE与Web-Sockets" class="headerlink" title="SSE与Web Sockets"></a>SSE与Web Sockets</h3><p>是使用 SSE 还是使用 Web Sockets，可以考虑如下几个因素：</p>
+<p>是否有自由度建立和维护 Web Sockets服务器？<br>因为 Web Socket 协议不同于 HTTP，所以现有服务器不能用于 Web Socket 通信。SSE 倒是通过常规 HTTP 通信，因此现有服务器就可以满足需求。<br>到底需不需要双向通信？<br>如果用例只需读取服务器数据（如比赛成绩），那么 SSE 比较容易实现。如果用例必须双向通信（如聊天室），那么 Web Sockets 显然更好。<br>在不能选择 Web Sockets 的情况下，组合 XHR 和 SSE 也是能实现双向通信的。</p>
+<h3 id="安全"><a href="#安全" class="headerlink" title="安全"></a>安全</h3><p>可以通过 XHR 访问的任何 URL 也可以通过浏览器或服务器来访问。<br>对于未被授权系统有权访问某个资源的情况，称之为 CSRF（Cross-Site Request Forgery，跨站点请求伪造）。</p>
+<p>为确保通过 XHR 访问的 URL 安全，通行的做法就是验证发送请求者是否有权限访问相应的资源。<br>方式1：要求以 SSL 连接来访问可以通过 XHR 请求的资源。<br>方式2：要求每一次请求都要附带经过相应算法计算得到的验证码。</p>
+<p>对防范 CSRF 攻击不起作用的措施：<br>要求发送 POST 而不是 GET 请求——很容易改变。<br>检查来源 URL 以确定是否可信——来源记录很容易伪造。<br>基于 cookie 信息进行验证——同样很容易伪造。</p>
+<h4 id="Web-Sockets"><a href="#Web-Sockets" class="headerlink" title="Web Sockets"></a>Web Sockets</h4><p>由于 Web Sockets 使用了自定义的协议,所以 URL 模式也略有不同。未加密的连接不再是 http:// ,而是 ws:// ;加密的连接也不是 https:// ,而是 wss:// 。</p>
+<h5 id="Web-Sockets-API"><a href="#Web-Sockets-API" class="headerlink" title="Web Sockets API"></a>Web Sockets API</h5><p>创建一个WebSockets实例对象：</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> socket = <span class="keyword">new</span> WebSocket(<span class="string">&quot;ws://www.example.com/server.php&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>WebSocket也有一个表示当前状态的<code>readyState</code>属性：</p>
+<ul>
+<li><code>WebSocket.OPENING (0)</code> ：正在建立连接</li>
+<li><code>WebSocket.OPEN (1)</code>：已经建立连接</li>
+<li><code>WebSocket.CLOSING (2)</code>：正在关闭连接</li>
+<li><code>WebSocket.CLOSE (3)</code>：已经关闭连接</li>
+</ul>
+<h5 id="发送和接收数据"><a href="#发送和接收数据" class="headerlink" title="发送和接收数据"></a>发送和接收数据</h5><p>向服务器发送数据，使用<code>send()</code>方法并传入任意字符串：</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> socket = <span class="keyword">new</span> WebSocket(<span class="string">&#x27;ws:// www.example.com/server.php&#x27;</span>);</span><br><span class="line">socket.send(<span class="string">&#x27;Hello World&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>Web Sockets只能发送纯文本数据，对于复杂的数据结构，在发送之前，必须进行序列化。</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> message = &#123;</span><br><span class="line">    <span class="attr">time</span>: <span class="keyword">new</span> <span class="title class_">Date</span>(),</span><br><span class="line">    <span class="attr">text</span>: <span class="string">&#x27;Hello world&#x27;</span>,</span><br><span class="line">    <span class="attr">clientId</span>: <span class="string">&#x27;adfalsf39&#x27;</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">socket.<span class="title function_">send</span>(<span class="title class_">JSON</span>.<span class="title function_">stringify</span>(message));</span><br></pre></td></tr></table></figure>
+
+<p>当服务器向客户端发来消息时，WebSocket对象就会触发<code>message</code>事件。这个<code>message</code>事件与其他传递消息的协议类似，也是把返回的数据保存在<code>event.data</code>属性中。</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">socket.<span class="property">onmessage</span> = <span class="keyword">function</span> (<span class="params">event</span>) &#123;</span><br><span class="line"> <span class="keyword">var</span> data = event.<span class="property">data</span>;</span><br><span class="line"> <span class="comment">// ....</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>与<code>send()</code>类似，<code>event.data</code>中返回的数据也是字符串，需要手工解析这些数据。</p>
+<h5 id="其他事件"><a href="#其他事件" class="headerlink" title="其他事件"></a>其他事件</h5><p>WebSocket对象还有其他三个事件，在连接生命周期的不同阶段触发：</p>
+<ul>
+<li><code>open</code>：在成功建立连接时触发</li>
+<li><code>error</code>：在发生错误时触发，连接不能持续</li>
+<li><code>close</code>：在连接关闭时触发</li>
+</ul>
+<p>WebSocked对象不支持DOM 2级事件监听：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> socket = <span class="keyword">new</span> <span class="title class_">WebSocket</span>(<span class="string">&quot;ws://www.example.com/server.php&quot;</span>);</span><br><span class="line">socket.<span class="property">onopen</span> = <span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="title function_">alert</span>(<span class="string">&quot;Connection established.&quot;</span>);</span><br><span class="line">&#125;;</span><br><span class="line">socket.<span class="property">onerror</span> = <span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="title function_">alert</span>(<span class="string">&quot;Connection error.&quot;</span>);</span><br><span class="line">&#125;;</span><br><span class="line">socket.<span class="property">onclose</span> = <span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="title function_">alert</span>(<span class="string">&quot;Connection closed.&quot;</span>);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://ms-yip.github.io">ms.y</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://ms-yip.github.io/2023/04/12/Ajax-%E4%B8%8E-Comet/">https://ms-yip.github.io/2023/04/12/Ajax-%E4%B8%8E-Comet/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://ms-yip.github.io" target="_blank">珊珊的小本子</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2023/07/12/vue-echarts%E5%85%A5%E9%97%A8/"><img class="prev-cover" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">vue-echarts入门</div></div></a></div><div class="next-post pull-right"><a href="/2023/04/12/JSON/"><img class="next-cover" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">JSON</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">ms.y</div><div class="author-info__description">珊珊的愿望就是有吃不完的小鱼干，还有吃不完的猪肉干牛肉干。所以在没有那么多吃的之前在这里都记着，挣到钱钱后换成喜欢的小鱼干哈</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">113</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">34</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">19</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/ms-yip"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#Web-Sockets-%E2%AD%90%EF%B8%8F"><span class="toc-number">1.</span> <span class="toc-text">Web Sockets ⭐️</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SSE%E4%B8%8EWeb-Sockets"><span class="toc-number"></span> <span class="toc-text">SSE与Web Sockets</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E5%85%A8"><span class="toc-number"></span> <span class="toc-text">安全</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Web-Sockets"><span class="toc-number">1.</span> <span class="toc-text">Web Sockets</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#Web-Sockets-API"><span class="toc-number">1.1.</span> <span class="toc-text">Web Sockets API</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%8F%91%E9%80%81%E5%92%8C%E6%8E%A5%E6%94%B6%E6%95%B0%E6%8D%AE"><span class="toc-number">1.2.</span> <span class="toc-text">发送和接收数据</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E4%BA%8B%E4%BB%B6"><span class="toc-number">1.3.</span> <span class="toc-text">其他事件</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2024/03/07/%E4%BB%A3%E7%A0%81%E6%8F%90%E4%BA%A4%E7%AE%A1%E7%90%86%E8%A7%84%E8%8C%83/" title="代码提交管理规范"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="代码提交管理规范"/></a><div class="content"><a class="title" href="/2024/03/07/%E4%BB%A3%E7%A0%81%E6%8F%90%E4%BA%A4%E7%AE%A1%E7%90%86%E8%A7%84%E8%8C%83/" title="代码提交管理规范">代码提交管理规范</a><time datetime="2024-03-07T00:59:59.000Z" title="发表于 2024-03-07 08:59:59">2024-03-07</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/03/06/lerna-monorepo-%E5%AE%9E%E8%B7%B5/" title="lerna monorepo 实践"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="lerna monorepo 实践"/></a><div class="content"><a class="title" href="/2024/03/06/lerna-monorepo-%E5%AE%9E%E8%B7%B5/" title="lerna monorepo 实践">lerna monorepo 实践</a><time datetime="2024-03-06T08:50:04.000Z" title="发表于 2024-03-06 16:50:04">2024-03-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/02/19/EditorConfig/" title="EditorConfig"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="EditorConfig"/></a><div class="content"><a class="title" href="/2024/02/19/EditorConfig/" title="EditorConfig">EditorConfig</a><time datetime="2024-02-19T08:55:27.000Z" title="发表于 2024-02-19 16:55:27">2024-02-19</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/02/07/%E5%B7%A5%E7%A8%8B%E5%8C%96/" title="工程化"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="工程化"/></a><div class="content"><a class="title" href="/2024/02/07/%E5%B7%A5%E7%A8%8B%E5%8C%96/" title="工程化">工程化</a><time datetime="2024-02-07T05:32:31.378Z" title="发表于 2024-02-07 13:32:31">2024-02-07</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/12/08/hexo-%E6%90%AD%E5%BB%BA%E8%87%AA%E5%B7%B1%E5%8D%9A%E5%AE%A2%E5%BF%83%E5%BE%97/" title="hexo 搭建自己博客心得"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="hexo 搭建自己博客心得"/></a><div class="content"><a class="title" href="/2023/12/08/hexo-%E6%90%AD%E5%BB%BA%E8%87%AA%E5%B7%B1%E5%8D%9A%E5%AE%A2%E5%BF%83%E5%BE%97/" title="hexo 搭建自己博客心得">hexo 搭建自己博客心得</a><time datetime="2023-12-08T02:35:20.000Z" title="发表于 2023-12-08 10:35:20">2023-12-08</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By ms.y</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
