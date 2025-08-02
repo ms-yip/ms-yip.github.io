@@ -1,0 +1,1535 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>mysql基础 | 珊珊的小本子</title><meta name="author" content="ms.y,yeminshan@126.com"><meta name="copyright" content="ms.y"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="准备⚠️ Mac os 中mysql start 启动失败 使用命令行：  1234sudo &amp;#x2F;usr&amp;#x2F;local&amp;#x2F;mysql&amp;#x2F;support-files&amp;#x2F;mysql.server startsudo &amp;#x2F;usr&amp;#x2F;local&amp;#x2F;mysql&amp;#x2F;support-files&amp;#x2F;mysql.server resta"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://ms-yip.github.io/2024/10/11/mysql%E5%9F%BA%E7%A1%80/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":false,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'mysql基础',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2025-07-31 15:46:32'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.4.2"><link rel="alternate" href="/atom.xml" title="珊珊的小本子" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">140</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">45</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">25</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/bg6.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">珊珊的小本子</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">mysql基础</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-10-11T07:08:56.000Z" title="发表于 2024-10-11 15:08:56">2024-10-11</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-07-31T07:46:32.087Z" title="更新于 2025-07-31 15:46:32">2025-07-31</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">6.3k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>25分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="mysql基础"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h1><p>⚠️ Mac os 中mysql start 启动失败 使用命令行：</p>
+ <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo /usr/local/mysql/support-files/mysql.server start</span><br><span class="line">sudo /usr/local/mysql/support-files/mysql.server restart </span><br><span class="line">sudo /usr/local/mysql/bin# /usr/local/mysql/support-files/mysql.server stop</span><br><span class="line">sudo /usr/local/mysql/support-files/mysql.server stop</span><br></pre></td></tr></table></figure>
+
+
+
+<p>没有权限访问data目录，请设置：</p>
+<p><code>sudo chmod 777 /usr/local/mysql/data</code></p>
+<h4 id="创建符号链接："><a href="#创建符号链接：" class="headerlink" title="创建符号链接："></a>创建符号链接：</h4><p>如果你不想每次都输入完整路径，可以通过创建一个符号链接，使得 <code>mysql.server</code> 命令在系统任何地方都能找到。</p>
+<p>例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo ln -s /usr/local/mysql/support-files/mysql.server /usr/local/bin/mysql.server</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo mysql.server start</span><br><span class="line">sudo mysql.server restart</span><br><span class="line">sudo mysql.server stop</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<p>修改root密码</p>
+<p>确保mysql是关闭状态</p>
+<p>1、 进入mysql文件夹，终端输入： cd /usr/local/mysql/bin 点击回车；</p>
+<p>2、获取权限，输入： sudo su 点击回车，输入电脑开机密码，点击回车；（此时输入的密码终端是看不到的，根据记忆输入即可）；</p>
+<p>3、进入安全模式，输入： ./mysqld_safe –skip-grant-tables &amp; 点击回车。</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/a06b465e9f0d46df31f60c48c6931d1f.png" alt="在这里插入图片描述"></p>
+<p>三、再次启动一个新的终端（之前那个放着不动）<br>1、进入mysql命令模式，终端输入：mysql 点击回车；</p>
+<p>2、终端内输入：use mysql点击回车；</p>
+<p>3、设置root账户为空密码，终端内输入：UPDATE user SET authentication_string=’’ where user=’root’; 点击回车；</p>
+<p>4、刷新权限：flush privileges; 点击回车；</p>
+<p>5、退出 <code>exit</code> 。</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/5da3eb939a181748a52d9b20d7fc8050.png" alt="在这里插入图片描述"></p>
+<p>四、设置新密码<br>1、进入mysql，终端输入：mysql -uroot -p 点击回车，输入密码时，直接回车；</p>
+<p>2、进入mysql数据库，输入：use mysql 点击回车；</p>
+<p>3、设置新密码，输入 alter user ‘root’@’localhost’ identified by ‘你期望的新密码’; 点击回车；</p>
+<p>4、刷新权限，输入：flush privileges; 回车。<br>提示 Query OK， 就搞定啦！</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/1ed1e6769a5549ea8b9e14530af46f18.png" alt="在这里插入图片描述"></p>
+<p><strong>新密码测试：</strong><br>1、终端输入： <code>mysql -uroot -p</code> ，点击回车；</p>
+<p>2、输入刚才重置的新密码，显示Welcom to the MySQL…。<br><img src="https://i-blog.csdnimg.cn/blog_migrate/77ff6549a1004e7df8d39fb9887e5070.png" alt="在这里插入图片描述"  /></p>
+<p>使用navicat 连接本地mysql</p>
+<img src="/images/mysql基础/image-20250121105118595.png" alt="image-20250121105118595" style="zoom:50%;" />
+
+<p>初始化后连接成功如图下，</p>
+<img src="/images/mysql基础/image-20250121105056111.png" alt="image-20250121105056111" style="zoom:50%;" />
+
+<h1 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h1><h2 id="基础命令"><a href="#基础命令" class="headerlink" title="基础命令"></a>基础命令</h2><table>
+<thead>
+<tr>
+<th align="left">操作</th>
+<th align="left">命令</th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">连接到 MySQL 数据库（要输入密码）</td>
+<td align="left"><code>mysql -u 用户名 -p</code></td>
+<td></td>
+</tr>
+<tr>
+<td align="left">查看所有数据库</td>
+<td align="left"><code>SHOW DATABASES;</code></td>
+<td></td>
+</tr>
+<tr>
+<td align="left">选择（使用）一个数据库</td>
+<td align="left"><code>USE 数据库名;</code></td>
+<td></td>
+</tr>
+<tr>
+<td align="left">查看所有表</td>
+<td align="left"><code>SHOW TABLES;</code></td>
+<td></td>
+</tr>
+<tr>
+<td align="left">查看表结构</td>
+<td align="left"><code>DESCRIBE 表名;</code> 或 <code>SHOW COLUMNS FROM 表名;</code></td>
+<td></td>
+</tr>
+<tr>
+<td align="left">创建一个新数据库</td>
+<td align="left"><code>CREATE DATABASE 数据库名;</code></td>
+<td>CREATE DATABASE [IF NOT EXISTS] database_name<br/>  [CHARACTER SET charset_name]<br/>  [COLLATE collation_name];<br />CREATE DATABASE IF NOT EXISTS mydatabase;</td>
+</tr>
+<tr>
+<td align="left">删除一个数据库</td>
+<td align="left"><code>DROP DATABASE 数据库名;</code></td>
+<td>DROP DATABASE [IF EXISTS] <database_name>;</td>
+</tr>
+<tr>
+<td align="left">创建一个新表</td>
+<td align="left"><code>CREATE TABLE 表名 (列名1 数不据类型 [约束], 列名2 数据类型 [约束], ...);</code></td>
+<td></td>
+</tr>
+<tr>
+<td align="left">删除一个表</td>
+<td align="left"><code>DROP TABLE 表名;</code></td>
+<td>DROP TABLE IF EXISTS mytable;</td>
+</tr>
+<tr>
+<td align="left">插入数据</td>
+<td align="left"><code>INSERT INTO 表名 [(列1, 列2, ...)] VALUES (值1, 值2, ...);</code></td>
+<td>SELECT column1, column2, … FROM table_name [WHERE condition] [ORDER BY column_name [ASC | DESC]] [LIMIT number];<br /></td>
+</tr>
+<tr>
+<td align="left">查询数据</td>
+<td align="left"><code>SELECT 列1, 列2, ... FROM 表名 WHERE 条件;</code></td>
+<td></td>
+</tr>
+<tr>
+<td align="left">更新数据</td>
+<td align="left"><code>UPDATE 表名 SET 列1 = 值1, 列2 = 值2, ... WHERE 条件;</code></td>
+<td></td>
+</tr>
+<tr>
+<td align="left">删除数据</td>
+<td align="left"><code>DELETE FROM 表名 WHERE 条件;</code></td>
+<td>DELETE FROM customers WHERE customer_id IN (     SELECT customer_id     FROM orders     WHERE order_date &lt; ‘2023-01-01’ );</td>
+</tr>
+<tr>
+<td align="left">创建用户</td>
+<td align="left"><code>CREATE USER &#39;用户名&#39;@&#39;主机&#39; IDENTIFIED BY &#39;密码&#39;;</code></td>
+<td></td>
+</tr>
+<tr>
+<td align="left">授权用户</td>
+<td align="left"><code>GRANT 权限 ON 数据库名.* TO &#39;用户名&#39;@&#39;主机&#39;;</code></td>
+<td></td>
+</tr>
+<tr>
+<td align="left">刷新权限</td>
+<td align="left"><code>FLUSH PRIVILEGES;</code></td>
+<td></td>
+</tr>
+<tr>
+<td align="left">查看当前用户</td>
+<td align="left"><code>SELECT USER();</code></td>
+<td></td>
+</tr>
+<tr>
+<td align="left">退出 MySQL</td>
+<td align="left"><code>EXIT;</code></td>
+<td></td>
+</tr>
+<tr>
+<td align="left">连接多个SELECT 语句的结果组合到一个结果集合,去除重复的行</td>
+<td align="left">UNION</td>
+<td></td>
+</tr>
+<tr>
+<td align="left">NION ALL 不会去除重复行*</td>
+<td align="left">UNION ALL</td>
+<td></td>
+</tr>
+</tbody></table>
+<h2 id="数据库相关命令"><a href="#数据库相关命令" class="headerlink" title="数据库相关命令"></a>数据库相关命令</h2><p>下面是与 MySQL 数据库操作相关的命令，包括创建、删除和修改数据库等操作：</p>
+<table>
+<thead>
+<tr>
+<th align="left">操作</th>
+<th align="left">命令</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>创建数据库</strong></td>
+<td align="left"><code>CREATE DATABASE 数据库名;</code></td>
+</tr>
+<tr>
+<td align="left"><strong>删除数据库</strong></td>
+<td align="left"><code>DROP DATABASE 数据库名;</code></td>
+</tr>
+<tr>
+<td align="left"><strong>修改数据库编码格式和排序规则</strong></td>
+<td align="left"><code>ALTER DATABASE 数据库名 DEFAULT CHARACTER SET 编码格式 DEFAULT COLLATE 排序规则;</code></td>
+</tr>
+<tr>
+<td align="left"><strong>查看所有数据库</strong></td>
+<td align="left"><code>SHOW DATABASES;</code></td>
+</tr>
+<tr>
+<td align="left"><strong>查看数据库详细信息</strong></td>
+<td align="left"><code>SHOW CREATE DATABASE 数据库名;</code></td>
+</tr>
+<tr>
+<td align="left"><strong>选择数据库</strong></td>
+<td align="left"><code>USE 数据库名;</code></td>
+</tr>
+<tr>
+<td align="left"><strong>查看数据库的状态信息</strong></td>
+<td align="left"><code>SHOW STATUS;</code></td>
+</tr>
+<tr>
+<td align="left"><strong>查看数据库的错误信息</strong></td>
+<td align="left"><code>SHOW ERRORS;</code></td>
+</tr>
+<tr>
+<td align="left"><strong>查看数据库的警告信息</strong></td>
+<td align="left"><code>SHOW WARNINGS;</code></td>
+</tr>
+<tr>
+<td align="left"><strong>查看数据库的表</strong></td>
+<td align="left"><code>SHOW TABLES;</code></td>
+</tr>
+<tr>
+<td align="left"><strong>查看表的结构</strong></td>
+<td align="left"><code>DESC 表名;</code> <code>DESCRIBE 表名;</code> <code>SHOW COLUMNS FROM 表名;</code> <code>EXPLAIN 表名;</code></td>
+</tr>
+<tr>
+<td align="left"><strong>创建表</strong></td>
+<td align="left"><code>CREATE TABLE 表名 (列名1 数据类型 [约束], 列名2 数据类型 [约束], ...);</code></td>
+</tr>
+<tr>
+<td align="left"><strong>删除表</strong></td>
+<td align="left"><code>DROP TABLE 表名;</code></td>
+</tr>
+<tr>
+<td align="left"><strong>修改表结构</strong></td>
+<td align="left"><code>ALTER TABLE 表名 ADD 列名 数据类型 [约束];</code> <code>ALTER TABLE 表名 DROP 列名;</code> <code>ALTER TABLE 表名 MODIFY 列名 数据类型 [约束];</code></td>
+</tr>
+<tr>
+<td align="left"><strong>查看表的创建 SQL</strong></td>
+<td align="left"><code>SHOW CREATE TABLE 表名;</code></td>
+</tr>
+</tbody></table>
+<h2 id="数据表相关命令"><a href="#数据表相关命令" class="headerlink" title="数据表相关命令"></a>数据表相关命令</h2><p>以下是与 MySQL 数据表相关的常用命令，包括创建、修改、删除表以及查看表的结构和数据等操作：</p>
+<table>
+<thead>
+<tr>
+<th align="left">操作</th>
+<th align="left">命令</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>创建表</strong></td>
+<td align="left"><code>CREATE TABLE 表名 (列名1 数据类型 [约束], 列名2 数据类型 [约束], ...);</code></td>
+</tr>
+<tr>
+<td align="left"><strong>删除表</strong></td>
+<td align="left"><code>DROP TABLE 表名;</code></td>
+</tr>
+<tr>
+<td align="left"><strong>修改表结构</strong></td>
+<td align="left">添加列: <code>ALTER TABLE 表名 ADD 列名 数据类型 [约束];</code> 删除列: <code>ALTER TABLE 表名 DROP 列名;</code> 修改列: <code>ALTER TABLE 表名 MODIFY 列名 数据类型 [约束];</code> 重命名列: <code>ALTER TABLE 表名 CHANGE 旧列名 新列名 数据类型 [约束];</code></td>
+</tr>
+<tr>
+<td align="left"><strong>查看表结构</strong></td>
+<td align="left"><code>DESC 表名;</code> <code>DESCRIBE 表名;</code> <code>SHOW COLUMNS FROM 表名;</code> <code>EXPLAIN 表名;</code></td>
+</tr>
+<tr>
+<td align="left"><strong>查看表的创建 SQL</strong></td>
+<td align="left"><code>SHOW CREATE TABLE 表名;</code></td>
+</tr>
+<tr>
+<td align="left"><strong>查看表中的所有数据</strong></td>
+<td align="left"><code>SELECT * FROM 表名;</code></td>
+</tr>
+<tr>
+<td align="left"><strong>插入数据</strong></td>
+<td align="left"><code>INSERT INTO 表名 (列1, 列2, ...) VALUES (值1, 值2, ...);</code></td>
+</tr>
+<tr>
+<td align="left"><strong>更新数据</strong></td>
+<td align="left"><code>UPDATE 表名 SET 列1 = 值1, 列2 = 值2, ... WHERE 条件;</code></td>
+</tr>
+<tr>
+<td align="left"><strong>删除数据</strong></td>
+<td align="left"><code>DELETE FROM 表名 WHERE 条件;</code></td>
+</tr>
+<tr>
+<td align="left"><strong>查看表的索引</strong></td>
+<td align="left"><code>SHOW INDEX FROM 表名;</code></td>
+</tr>
+<tr>
+<td align="left"><strong>创建索引</strong></td>
+<td align="left"><code>CREATE INDEX 索引名 ON 表名 (列名);</code></td>
+</tr>
+<tr>
+<td align="left"><strong>删除索引</strong></td>
+<td align="left"><code>DROP INDEX 索引名 ON 表名;</code></td>
+</tr>
+<tr>
+<td align="left"><strong>查看表的约束</strong></td>
+<td align="left"><code>SHOW CREATE TABLE 表名;</code> (约束信息会包含在创建表的 SQL 中)</td>
+</tr>
+<tr>
+<td align="left"><strong>查看表的统计信息</strong></td>
+<td align="left"><code>SHOW TABLE STATUS LIKE &#39;表名&#39;;</code></td>
+</tr>
+</tbody></table>
+<h2 id="MySQL-事务相关命令"><a href="#MySQL-事务相关命令" class="headerlink" title="MySQL 事务相关命令"></a>MySQL 事务相关命令</h2><p>以下是与 MySQL 事务相关的常用命令：</p>
+<table>
+<thead>
+<tr>
+<th align="left">操作</th>
+<th align="left">命令</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>开始事务</strong></td>
+<td align="left"><code>START TRANSACTION;</code> 或 <code>BEGIN;</code></td>
+</tr>
+<tr>
+<td align="left"><strong>提交事务</strong></td>
+<td align="left"><code>COMMIT;</code></td>
+</tr>
+<tr>
+<td align="left"><strong>回滚事务</strong></td>
+<td align="left"><code>ROLLBACK;</code></td>
+</tr>
+<tr>
+<td align="left"><strong>查看当前事务的状态</strong></td>
+<td align="left"><code>SHOW ENGINE INNODB STATUS;</code> (可查看 InnoDB 存储引擎的事务状态)</td>
+</tr>
+<tr>
+<td align="left"><strong>锁定表以进行事务操作</strong></td>
+<td align="left"><code>LOCK TABLES 表名 WRITE;</code> 或 <code>LOCK TABLES 表名 READ;</code></td>
+</tr>
+<tr>
+<td align="left"><strong>释放锁定的表</strong></td>
+<td align="left"><code>UNLOCK TABLES;</code></td>
+</tr>
+<tr>
+<td align="left"><strong>设置事务的隔离级别</strong></td>
+<td align="left"><code>SET TRANSACTION ISOLATION LEVEL READ COMMITTED;</code> <code>SET TRANSACTION ISOLATION LEVEL REPEATABLE READ;</code> <code>SET TRANSACTION ISOLATION LEVEL SERIALIZABLE;</code> <code>SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED;</code></td>
+</tr>
+</tbody></table>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">  CREATE DATABASE mydatabase</span><br><span class="line">  CHARACTER SET utf8mb4</span><br><span class="line">  COLLATE utf8mb4_general_ci;</span><br><span class="line">  </span><br><span class="line">  CREATE DATABASE IF NOT EXISTS mydatabase;</span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line">  mysqladmin -u your_username -p drop your_database</span><br><span class="line">  </span><br><span class="line">  CREATE TABLE users (</span><br><span class="line">    id INT AUTO_INCREMENT PRIMARY KEY,</span><br><span class="line">    username VARCHAR(50) NOT NULL,</span><br><span class="line">    email VARCHAR(100) NOT NULL,</span><br><span class="line">    birthdate DATE,</span><br><span class="line">    is_active BOOLEAN DEFAULT TRUE</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">CREATE TABLE mytable (</span><br><span class="line">    id INT PRIMARY KEY,</span><br><span class="line">    name VARCHAR(50)</span><br><span class="line">) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;</span><br><span class="line"></span><br><span class="line">CREATE TABLE IF NOT EXISTS `runoob_tbl`(</span><br><span class="line">   `runoob_id` INT UNSIGNED AUTO_INCREMENT,</span><br><span class="line">   `runoob_title` VARCHAR(100) NOT NULL,</span><br><span class="line">   `runoob_author` VARCHAR(40) NOT NULL,</span><br><span class="line">   `submission_date` DATE,</span><br><span class="line">   PRIMARY KEY ( `runoob_id` )</span><br><span class="line">)ENGINE=InnoDB DEFAULT CHARSET=utf8;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h1 id="MySQL-数据类型"><a href="#MySQL-数据类型" class="headerlink" title="MySQL 数据类型"></a>MySQL 数据类型</h1><h2 id="数值类型"><a href="#数值类型" class="headerlink" title="数值类型"></a>数值类型</h2><table>
+<thead>
+<tr>
+<th align="left">类型</th>
+<th align="left">大小</th>
+<th align="left">范围（有符号）</th>
+<th align="left">范围（无符号）</th>
+<th align="left">用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">TINYINT</td>
+<td align="left">1 Bytes</td>
+<td align="left">(-128，127)</td>
+<td align="left">(0，255)</td>
+<td align="left">小整数值</td>
+</tr>
+<tr>
+<td align="left">SMALLINT</td>
+<td align="left">2 Bytes</td>
+<td align="left">(-32 768，32 767)</td>
+<td align="left">(0，65 535)</td>
+<td align="left">大整数值</td>
+</tr>
+<tr>
+<td align="left">MEDIUMINT</td>
+<td align="left">3 Bytes</td>
+<td align="left">(-8 388 608，8 388 607)</td>
+<td align="left">(0，16 777 215)</td>
+<td align="left">大整数值</td>
+</tr>
+<tr>
+<td align="left">INT或INTEGER</td>
+<td align="left">4 Bytes</td>
+<td align="left">(-2 147 483 648，2 147 483 647)</td>
+<td align="left">(0，4 294 967 295)</td>
+<td align="left">大整数值</td>
+</tr>
+<tr>
+<td align="left">BIGINT</td>
+<td align="left">8 Bytes</td>
+<td align="left">(-9,223,372,036,854,775,808，9 223 372 036 854 775 807)</td>
+<td align="left">(0，18 446 744 073 709 551 615)</td>
+<td align="left">极大整数值</td>
+</tr>
+<tr>
+<td align="left">FLOAT</td>
+<td align="left">4 Bytes</td>
+<td align="left">(-3.402 823 466 E+38，-1.175 494 351 E-38)，0，(1.175 494 351 E-38，3.402 823 466 351 E+38)</td>
+<td align="left">0，(1.175 494 351 E-38，3.402 823 466 E+38)</td>
+<td align="left">单精度 浮点数值</td>
+</tr>
+<tr>
+<td align="left">DOUBLE</td>
+<td align="left">8 Bytes</td>
+<td align="left">(-1.797 693 134 862 315 7 E+308，-2.225 073 858 507 201 4 E-308)，0，(2.225 073 858 507 201 4 E-308，1.797 693 134 862 315 7 E+308)</td>
+<td align="left">0，(2.225 073 858 507 201 4 E-308，1.797 693 134 862 315 7 E+308)</td>
+<td align="left">双精度 浮点数值</td>
+</tr>
+<tr>
+<td align="left">DECIMAL</td>
+<td align="left">对DECIMAL(M,D) ，如果M&gt;D，为M+2否则为D+2</td>
+<td align="left">依赖于M和D的值</td>
+<td align="left">依赖于M和D的值</td>
+<td align="left">小数值</td>
+</tr>
+</tbody></table>
+<h2 id="日期和时间类型"><a href="#日期和时间类型" class="headerlink" title="日期和时间类型"></a>日期和时间类型</h2><table>
+<thead>
+<tr>
+<th align="left">类型</th>
+<th align="left">大小 ( bytes)</th>
+<th align="left">范围</th>
+<th align="left">格式</th>
+<th align="left">用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">DATE</td>
+<td align="left">3</td>
+<td align="left">1000-01-01/9999-12-31</td>
+<td align="left">YYYY-MM-DD</td>
+<td align="left">日期值</td>
+</tr>
+<tr>
+<td align="left">TIME</td>
+<td align="left">3</td>
+<td align="left">‘-838:59:59’/‘838:59:59’</td>
+<td align="left">HH:MM:SS</td>
+<td align="left">时间值或持续时间</td>
+</tr>
+<tr>
+<td align="left">YEAR</td>
+<td align="left">1</td>
+<td align="left">1901/2155</td>
+<td align="left">YYYY</td>
+<td align="left">年份值</td>
+</tr>
+<tr>
+<td align="left">DATETIME</td>
+<td align="left">8</td>
+<td align="left">‘1000-01-01 00:00:00’ 到 ‘9999-12-31 23:59:59’</td>
+<td align="left">YYYY-MM-DD hh:mm:ss</td>
+<td align="left">混合日期和时间值</td>
+</tr>
+<tr>
+<td align="left">TIMESTAMP</td>
+<td align="left">4</td>
+<td align="left">‘1970-01-01 00:00:01’ UTC 到 ‘2038-01-19 03:14:07’ UTC结束时间是第 <strong>2147483647</strong> 秒，北京时间 <strong>2038-1-19 11:14:07</strong>，格林尼治时间 2038年1月19日 凌晨 03:14:07</td>
+<td align="left">YYYY-MM-DD hh:mm:ss</td>
+<td align="left">混合日期和时间值，时间戳</td>
+</tr>
+</tbody></table>
+<h2 id="字符串类型"><a href="#字符串类型" class="headerlink" title="字符串类型"></a>字符串类型</h2><table>
+<thead>
+<tr>
+<th align="left">类型</th>
+<th align="left">大小</th>
+<th align="left">用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">CHAR</td>
+<td align="left">0-255 bytes</td>
+<td align="left">定长字符串</td>
+</tr>
+<tr>
+<td align="left">VARCHAR</td>
+<td align="left">0-65535 bytes</td>
+<td align="left">变长字符串</td>
+</tr>
+<tr>
+<td align="left">TINYBLOB</td>
+<td align="left">0-255 bytes</td>
+<td align="left">不超过 255 个字符的二进制字符串</td>
+</tr>
+<tr>
+<td align="left">TINYTEXT</td>
+<td align="left">0-255 bytes</td>
+<td align="left">短文本字符串</td>
+</tr>
+<tr>
+<td align="left">BLOB</td>
+<td align="left">0-65 535 bytes</td>
+<td align="left">二进制形式的长文本数据</td>
+</tr>
+<tr>
+<td align="left">TEXT</td>
+<td align="left">0-65 535 bytes</td>
+<td align="left">长文本数据</td>
+</tr>
+<tr>
+<td align="left">MEDIUMBLOB</td>
+<td align="left">0-16 777 215 bytes</td>
+<td align="left">二进制形式的中等长度文本数据</td>
+</tr>
+<tr>
+<td align="left">MEDIUMTEXT</td>
+<td align="left">0-16 777 215 bytes</td>
+<td align="left">中等长度文本数据</td>
+</tr>
+<tr>
+<td align="left">LONGBLOB</td>
+<td align="left">0-4 294 967 295 bytes</td>
+<td align="left">二进制形式的极大文本数据</td>
+</tr>
+<tr>
+<td align="left">LONGTEXT</td>
+<td align="left">0-4 294 967 295 bytes</td>
+<td align="left">极大文本数据</td>
+</tr>
+</tbody></table>
+<h2 id="枚举与集合类型（Enumeration-and-Set-Types）"><a href="#枚举与集合类型（Enumeration-and-Set-Types）" class="headerlink" title="枚举与集合类型（Enumeration and Set Types）"></a>枚举与集合类型（Enumeration and Set Types）</h2><ul>
+<li><strong>ENUM</strong>: 枚举类型，用于存储单一值，可以选择一个预定义的集合。</li>
+<li><strong>SET</strong>: 集合类型，用于存储多个值，可以选择多个预定义的集合。</li>
+</ul>
+<h2 id="空间数据类型（Spatial-Data-Types）"><a href="#空间数据类型（Spatial-Data-Types）" class="headerlink" title="空间数据类型（Spatial Data Types）"></a>空间数据类型（Spatial Data Types）</h2><p>GEOMETRY, POINT, LINESTRING, POLYGON, MULTIPOINT, MULTILINESTRING, MULTIPOLYGON, GEOMETRYCOLLECTION: 用于存储空间数据（地理信息、几何图形等）。</p>
+<h3 id="where-子句"><a href="#where-子句" class="headerlink" title="where 子句"></a>where 子句</h3><table>
+<thead>
+<tr>
+<th align="left"><strong>序号</strong></th>
+<th align="left"><strong>条件类型</strong></th>
+<th align="left"><strong>SQL 示例</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">1</td>
+<td align="left">等于条件</td>
+<td align="left"><code>SELECT * FROM users WHERE username = &#39;test&#39;;</code></td>
+</tr>
+<tr>
+<td align="left">2</td>
+<td align="left">不等于条件</td>
+<td align="left"><code>SELECT * FROM users WHERE username != &#39;runoob&#39;;</code></td>
+</tr>
+<tr>
+<td align="left">3</td>
+<td align="left">大于条件</td>
+<td align="left"><code>SELECT * FROM products WHERE price &gt; 50.00;</code></td>
+</tr>
+<tr>
+<td align="left">4</td>
+<td align="left">小于条件</td>
+<td align="left"><code>SELECT * FROM orders WHERE order_date &lt; &#39;2023-01-01&#39;;</code></td>
+</tr>
+<tr>
+<td align="left">5</td>
+<td align="left">大于等于条件</td>
+<td align="left"><code>SELECT * FROM employees WHERE salary &gt;= 50000;</code></td>
+</tr>
+<tr>
+<td align="left">6</td>
+<td align="left">小于等于条件</td>
+<td align="left"><code>SELECT * FROM students WHERE age &lt;= 21;</code></td>
+</tr>
+<tr>
+<td align="left">7</td>
+<td align="left">组合条件（AND）</td>
+<td align="left"><code>SELECT * FROM products WHERE category = &#39;Electronics&#39; AND price &gt; 100.00;</code></td>
+</tr>
+<tr>
+<td align="left">7</td>
+<td align="left">组合条件（OR）</td>
+<td align="left"><code>SELECT * FROM orders WHERE order_date &gt;= &#39;2023-01-01&#39; OR total_amount &gt; 1000.00;</code></td>
+</tr>
+<tr>
+<td align="left">8</td>
+<td align="left">模糊匹配条件（LIKE）</td>
+<td align="left"><code>SELECT * FROM customers WHERE first_name LIKE &#39;J%&#39;;</code></td>
+</tr>
+<tr>
+<td align="left">9</td>
+<td align="left">IN 条件</td>
+<td align="left"><code>SELECT * FROM countries WHERE country_code IN (&#39;US&#39;, &#39;CA&#39;, &#39;MX&#39;);</code></td>
+</tr>
+<tr>
+<td align="left">10</td>
+<td align="left">NOT 条件</td>
+<td align="left"><code>SELECT * FROM products WHERE NOT category = &#39;Clothing&#39;;</code></td>
+</tr>
+<tr>
+<td align="left">11</td>
+<td align="left">BETWEEN 条件</td>
+<td align="left"><code>SELECT * FROM orders WHERE order_date BETWEEN &#39;2023-01-01&#39; AND &#39;2023-12-31&#39;;</code></td>
+</tr>
+<tr>
+<td align="left">12</td>
+<td align="left">IS NULL 条件</td>
+<td align="left"><code>SELECT * FROM employees WHERE department IS NULL;</code></td>
+</tr>
+<tr>
+<td align="left">13</td>
+<td align="left">IS NOT NULL 条件</td>
+<td align="left"><code>SELECT * FROM customers WHERE email IS NOT NULL;</code></td>
+</tr>
+<tr>
+<td align="left">14</td>
+<td align="left">BINARY 关键字区分大小写</td>
+<td align="left">SELECT * from runoob_tbl WHERE BINARY runoob_author=’RUNOOB.COM’;</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th align="left"><strong>序号</strong></th>
+<th align="left"><strong>通配符类型</strong></th>
+<th align="left"><strong>描述</strong></th>
+<th align="left"><strong>SQL 示例</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">1</td>
+<td align="left">百分号通配符 <code>%</code></td>
+<td align="left">表示零个或多个字符。例如，<code>&#39;a%&#39;</code> 匹配以字母 <code>&#39;a&#39;</code> 开头的任何字符串。</td>
+<td align="left"><code>SELECT * FROM customers WHERE last_name LIKE &#39;S%&#39;;</code></td>
+</tr>
+<tr>
+<td align="left">2</td>
+<td align="left">下划线通配符 <code>_</code></td>
+<td align="left">表示一个字符。例如，<code>&#39;_r%&#39;</code> 匹配第二个字母为 <code>&#39;r&#39;</code> 的任何字符串。</td>
+<td align="left"><code>SELECT * FROM products WHERE product_name LIKE &#39;_a%&#39;;</code></td>
+</tr>
+<tr>
+<td align="left">3</td>
+<td align="left">组合使用 <code>%</code> 和 <code>_</code></td>
+<td align="left">结合使用 <code>%</code> 和 <code>_</code> 进行更复杂的匹配。</td>
+<td align="left"><code>SELECT * FROM users WHERE username LIKE &#39;a%o_&#39;;</code></td>
+</tr>
+<tr>
+<td align="left">4</td>
+<td align="left">不区分大小写的匹配</td>
+<td align="left">使用 <code>COLLATE</code> 实现不区分大小写的匹配。</td>
+<td align="left"><code>SELECT * FROM employees WHERE last_name LIKE &#39;smi%&#39; COLLATE utf8mb4_general_ci;</code></td>
+</tr>
+</tbody></table>
+<h1 id="ORDER-BY-排序-语句"><a href="#ORDER-BY-排序-语句" class="headerlink" title="ORDER BY(排序) 语句"></a>ORDER BY(排序) 语句</h1><p><code>ASC</code> 表示升序（默认），<code>DESC</code> 表示降序。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT column1, column2, ...</span><br><span class="line">FROM table_name</span><br><span class="line">ORDER BY column1 [ASC | DESC], column2 [ASC | DESC], ...;</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th align="left"><strong>序号</strong></th>
+<th align="left"><strong>排序类型</strong></th>
+<th align="left"><strong>SQL 示例</strong></th>
+<th align="left"><strong>描述</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">1</td>
+<td align="left">单列排序</td>
+<td align="left"><code>SELECT * FROM products ORDER BY product_name ASC;</code></td>
+<td align="left">选择 <code>products</code> 表中的所有产品，并按 <code>product_name</code> 升序排序。</td>
+</tr>
+<tr>
+<td align="left">2</td>
+<td align="left">多列排序</td>
+<td align="left"><code>SELECT * FROM employees ORDER BY department_id ASC, hire_date DESC;</code></td>
+<td align="left">选择 <code>employees</code> 表中的所有员工，先按 <code>department_id</code> 升序排序，再按 <code>hire_date</code> 降序排序。</td>
+</tr>
+<tr>
+<td align="left">3</td>
+<td align="left">使用数字表示列的位置</td>
+<td align="left"><code>SELECT first_name, last_name, salary FROM employees ORDER BY 3 DESC, 1 ASC;</code></td>
+<td align="left">选择 <code>employees</code> 表中的 <code>first_name</code>、<code>last_name</code> 和 <code>salary</code> 列，并按第三列（<code>salary</code>）降序排序，再按第一列（<code>first_name</code>）升序排序。</td>
+</tr>
+<tr>
+<td align="left">4</td>
+<td align="left">使用表达式排序</td>
+<td align="left"><code>SELECT product_name, price * discount_rate AS discounted_price FROM products ORDER BY discounted_price DESC;</code></td>
+<td align="left">选择 <code>products</code> 表中的 <code>product_name</code> 和计算后的 <code>discounted_price</code>，并按 <code>discounted_price</code> 降序排序。</td>
+</tr>
+<tr>
+<td align="left">5</td>
+<td align="left">处理 NULL 值</td>
+<td align="left"><code>SELECT product_name, price FROM products ORDER BY price DESC NULLS LAST;</code></td>
+<td align="left">选择 <code>products</code> 表中的 <code>product_name</code> 和 <code>price</code>，并按 <code>price</code> 降序排序，将 <code>NULL</code> 值排在最后。</td>
+</tr>
+<tr>
+<td align="left">5</td>
+<td align="left">处理 NULL 值</td>
+<td align="left"><code>SELECT product_name, price FROM products ORDER BY price DESC NULLS FIRST;</code></td>
+<td align="left">选择 <code>products</code> 表中的 <code>product_name</code> 和 <code>price</code>，并按 <code>price</code> 降序排序，将 <code>NULL</code> 值排在最前。</td>
+</tr>
+<tr>
+<td align="left">6</td>
+<td align="left">添加 WHERE…LIKE 子句来设置条件</td>
+<td align="left"><code>SELECT employee_id,first_name,last_name,department_id,      salary, hire_date FROM employees WHEREdepartment_id IN (10, 20, 30)AND first_name LIKE &#39;J%&#39;AND salary IS NOT NULLORDER BY department_id ASC,salary DESC NULLS LAST,hire_date ASC;</code></td>
+<td align="left">从 <code>employees</code> 表中筛选特定部门、名字以 ‘J’ 开头且工资不为 <code>NULL</code> 的员工，并按部门、工资和雇佣日期进行排序的功能。</td>
+</tr>
+<tr>
+<td align="left">7</td>
+<td align="left">COUNT、SUM、AVG</td>
+<td align="left">SELECT      department,      AVG(salary) AS avg_salary FROM employees GROUP BY department;</td>
+<td align="left">统计每个部门的平均工资</td>
+</tr>
+<tr>
+<td align="left">8</td>
+<td align="left">WITH ROLLUP</td>
+<td align="left">SELECT <br/>    department, <br/>    position,<br/>    COUNT(*) AS emp_count,<br/>    SUM(salary) AS total_salary<br/>FROM employees<br/>GROUP BY department, position WITH ROLLUP;</td>
+<td align="left">如下表：实现在分组统计数据基础上再进行相同的统计</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th align="left">department</th>
+<th align="left">position</th>
+<th align="left">emp_count</th>
+<th align="left">total_salary</th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">IT</td>
+<td align="left">Engineer</td>
+<td align="left">1</td>
+<td align="left">8000</td>
+<td></td>
+</tr>
+<tr>
+<td align="left">IT</td>
+<td align="left">Manager</td>
+<td align="left">1</td>
+<td align="left">15000</td>
+<td></td>
+</tr>
+<tr>
+<td align="left">IT</td>
+<td align="left"><strong>NULL</strong></td>
+<td align="left">2</td>
+<td align="left">23000</td>
+<td>– 部门汇总</td>
+</tr>
+<tr>
+<td align="left">HR</td>
+<td align="left">Director</td>
+<td align="left">1</td>
+<td align="left">20000</td>
+<td></td>
+</tr>
+<tr>
+<td align="left">HR</td>
+<td align="left">Recruiter</td>
+<td align="left">1</td>
+<td align="left">6000</td>
+<td></td>
+</tr>
+<tr>
+<td align="left">HR</td>
+<td align="left"><strong>NULL</strong></td>
+<td align="left">2</td>
+<td align="left">26000</td>
+<td>– 部门汇总</td>
+</tr>
+<tr>
+<td align="left">Sales</td>
+<td align="left">Associate</td>
+<td align="left">1</td>
+<td align="left">5000</td>
+<td></td>
+</tr>
+<tr>
+<td align="left">Sales</td>
+<td align="left"><strong>NULL</strong></td>
+<td align="left">1</td>
+<td align="left">5000</td>
+<td>– 部门汇总</td>
+</tr>
+<tr>
+<td align="left"><strong>NULL</strong></td>
+<td align="left"><strong>NULL</strong></td>
+<td align="left">5</td>
+<td align="left">54000</td>
+<td>– 全局汇总</td>
+</tr>
+</tbody></table>
+<h1 id="MySQL-连接的使用"><a href="#MySQL-连接的使用" class="headerlink" title="MySQL 连接的使用"></a>MySQL 连接的使用</h1><table>
+<thead>
+<tr>
+<th align="left">类型</th>
+<th align="left">描述</th>
+<th align="left">结果范围</th>
+<th align="left">示例 SQL</th>
+<th align="left">示例图示</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>INNER JOIN</strong></td>
+<td align="left">返回两个表中 <strong>匹配条件</strong> 的记录</td>
+<td align="left">两表交集数据</td>
+<td align="left"><code>SELECT * FROM employees e INNER JOIN departments d ON e.dept_id = d.id</code></td>
+<td align="left">两个圆的重叠区域</td>
+</tr>
+<tr>
+<td align="left"><strong>LEFT JOIN</strong></td>
+<td align="left">返回 <strong>左表全部记录</strong> + 右表匹配记录（无匹配时右表字段显示 NULL）</td>
+<td align="left">左表全集 + 右表匹配部分</td>
+<td align="left"><code>SELECT * FROM employees e LEFT JOIN departments d ON e.dept_id = d.id</code></td>
+<td align="left">左圆整体 + 与右圆重叠部分</td>
+</tr>
+<tr>
+<td align="left"><strong>RIGHT JOIN</strong></td>
+<td align="left">返回 <strong>右表全部记录</strong> + 左表匹配记录（无匹配时左表字段显示 NULL）</td>
+<td align="left">右表全集 + 左表匹配部分</td>
+<td align="left"><code>SELECT * FROM employees e RIGHT JOIN departments d ON e.dept_id = d.id</code></td>
+<td align="left">右圆整体 + 与左圆重叠部分</td>
+</tr>
+</tbody></table>
+<h4 id="员工表-employees"><a href="#员工表-employees" class="headerlink" title="员工表 employees"></a>员工表 <code>employees</code></h4><table>
+<thead>
+<tr>
+<th align="left">id</th>
+<th align="left">name</th>
+<th align="left">dept_id</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">1</td>
+<td align="left">张三</td>
+<td align="left">101</td>
+</tr>
+<tr>
+<td align="left">2</td>
+<td align="left">李四</td>
+<td align="left">102</td>
+</tr>
+<tr>
+<td align="left">3</td>
+<td align="left">王五</td>
+<td align="left">NULL</td>
+</tr>
+</tbody></table>
+<h4 id="部门表-departments"><a href="#部门表-departments" class="headerlink" title="部门表 departments"></a>部门表 <code>departments</code></h4><table>
+<thead>
+<tr>
+<th align="left">id</th>
+<th align="left">dept_name</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">101</td>
+<td align="left">技术部</td>
+</tr>
+<tr>
+<td align="left">102</td>
+<td align="left">销售部</td>
+</tr>
+<tr>
+<td align="left">103</td>
+<td align="left">财务部</td>
+</tr>
+</tbody></table>
+<h3 id="具体执行结果演示"><a href="#具体执行结果演示" class="headerlink" title="具体执行结果演示"></a>具体执行结果演示</h3><h4 id="1-INNER-JOIN-结果"><a href="#1-INNER-JOIN-结果" class="headerlink" title="1. INNER JOIN 结果"></a>1. INNER JOIN 结果</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT e.name, d.dept_name </span><br><span class="line">FROM employees e</span><br><span class="line">INNER JOIN departments d ON e.dept_id = d.id;</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th align="left">name</th>
+<th align="left">dept_name</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">张三</td>
+<td align="left">技术部</td>
+</tr>
+<tr>
+<td align="left">李四</td>
+<td align="left">销售部</td>
+</tr>
+</tbody></table>
+<p><strong>特点</strong>：只返回有部门信息的员工</p>
+<hr>
+<h4 id="2-LEFT-JOIN-结果"><a href="#2-LEFT-JOIN-结果" class="headerlink" title="2. LEFT JOIN 结果"></a>2. LEFT JOIN 结果</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT e.name, d.dept_name </span><br><span class="line">FROM employees e</span><br><span class="line">LEFT JOIN departments d ON e.dept_id = d.id;</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th align="left">name</th>
+<th align="left">dept_name</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">张三</td>
+<td align="left">技术部</td>
+</tr>
+<tr>
+<td align="left">李四</td>
+<td align="left">销售部</td>
+</tr>
+<tr>
+<td align="left">王五</td>
+<td align="left">NULL</td>
+</tr>
+</tbody></table>
+<p><strong>特点</strong>：保留所有员工，王五无部门信息显示为 NULL</p>
+<hr>
+<h4 id="3-RIGHT-JOIN-结果"><a href="#3-RIGHT-JOIN-结果" class="headerlink" title="3. RIGHT JOIN 结果"></a>3. RIGHT JOIN 结果</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT e.name, d.dept_name </span><br><span class="line">FROM employees e</span><br><span class="line">RIGHT JOIN departments d ON e.dept_id = d.id;</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th align="left">name</th>
+<th align="left">dept_name</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">张三</td>
+<td align="left">技术部</td>
+</tr>
+<tr>
+<td align="left">李四</td>
+<td align="left">销售部</td>
+</tr>
+<tr>
+<td align="left">NULL</td>
+<td align="left">财务部</td>
+</tr>
+</tbody></table>
+<p><strong>特点</strong>：保留所有部门，财务部无员工显示为 NULL</p>
+<h1 id="MySQL-NULL-值处理"><a href="#MySQL-NULL-值处理" class="headerlink" title="MySQL NULL 值处理"></a>MySQL NULL 值处理</h1><table>
+<thead>
+<tr>
+<th align="left"><strong>类型</strong></th>
+<th align="left"><strong>说明</strong></th>
+<th align="left"><strong>用法示例</strong></th>
+<th align="left"><strong>注意事项</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>运算符</strong></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><code>IS NULL</code></td>
+<td align="left">判断列值是否为 NULL</td>
+<td align="left"><code>SELECT * FROM employees WHERE department_id IS NULL;</code></td>
+<td align="left">不可用 <code>= NULL</code> 替代（<code>NULL = NULL</code> 返回 <code>NULL</code>，而非 <code>TRUE</code>）</td>
+</tr>
+<tr>
+<td align="left"><code>IS NOT NULL</code></td>
+<td align="left">判断列值是否不为 NULL</td>
+<td align="left"><code>SELECT * FROM employees WHERE department_id IS NOT NULL;</code></td>
+<td align="left">不可用 <code>!= NULL</code> 替代</td>
+</tr>
+<tr>
+<td align="left"><code>&lt;=&gt;</code></td>
+<td align="left">安全等于运算符，比较两个值（包括 NULL）是否相等</td>
+<td align="left"><code>SELECT * FROM employees WHERE commission &lt;=&gt; NULL;</code></td>
+<td align="left">唯一能正确比较 <code>NULL = NULL</code> 的运算符，返回 <code>TRUE</code></td>
+</tr>
+<tr>
+<td align="left"><strong>函数</strong></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><code>IFNULL()</code></td>
+<td align="left">若第一个参数为 NULL，返回第二个参数</td>
+<td align="left"><code>SELECT product_name, IFNULL(stock_quantity, 0) FROM products;</code></td>
+<td align="left">仅接受两个参数，MySQL 特有</td>
+</tr>
+<tr>
+<td align="left"><code>COALESCE()</code></td>
+<td align="left">返回参数列表中第一个非 NULL 值</td>
+<td align="left"><code>SELECT product_name, COALESCE(stock_quantity, 0, 100) FROM products;</code></td>
+<td align="left">可接受多个参数，标准 SQL 函数</td>
+</tr>
+<tr>
+<td align="left"><strong>排序</strong></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><code>ORDER BY</code></td>
+<td align="left">默认 NULL 值在排序时排在最后</td>
+<td align="left"><code>SELECT * FROM products ORDER BY price ASC;</code></td>
+<td align="left">若需 NULL 值在前，使用 <code>ORDER BY price ASC NULLS FIRST</code>（MySQL 8.0+ 支持）</td>
+</tr>
+<tr>
+<td align="left"><strong>聚合函数</strong></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><code>COUNT()</code></td>
+<td align="left">统计非 NULL 值的数量</td>
+<td align="left"><code>SELECT COUNT(name) FROM employees;</code></td>
+<td align="left"><code>COUNT(*)</code> 统计所有行，包含 NULL 列</td>
+</tr>
+<tr>
+<td align="left"><code>SUM()</code>/<code>AVG()</code></td>
+<td align="left">忽略 NULL 值进行计算</td>
+<td align="left"><code>SELECT AVG(COALESCE(salary, 0)) FROM employees;</code></td>
+<td align="left">若需将 NULL 视为 0，需显式使用 <code>COALESCE</code> 或 <code>IFNULL</code></td>
+</tr>
+<tr>
+<td align="left"><strong>注意事项</strong></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">条件比较</td>
+<td align="left"><code>WHERE column = NULL</code> 永远无效，必须用 <code>IS NULL</code></td>
+<td align="left">错误示例：<code>SELECT * FROM table WHERE column = NULL;</code></td>
+<td align="left">所有与 NULL 的比较（如 <code>&gt;</code>, <code>&lt;</code>, <code>=</code>）均返回 <code>NULL</code>，而非 <code>TRUE</code>/<code>FALSE</code></td>
+</tr>
+<tr>
+<td align="left">表设计</td>
+<td align="left">设计表时，明确是否需要允许 NULL（如非必要，可设置 <code>NOT NULL</code> 并指定默认值）</td>
+<td align="left"><code>CREATE TABLE users (id INT NOT NULL, name VARCHAR(50) DEFAULT &#39;Anonymous&#39;);</code></td>
+<td align="left">合理使用 <code>DEFAULT</code> 约束减少 NULL 值</td>
+</tr>
+<tr>
+<td align="left">函数兼容性</td>
+<td align="left"><code>COALESCE</code> 是标准 SQL 函数，<code>IFNULL</code> 是 MySQL 特有</td>
+<td align="left">跨数据库兼容建议优先使用 <code>COALESCE</code></td>
+<td align="left"><code>IFNULL</code> 仅支持两个参数，<code>COALESCE</code> 支持多参数</td>
+</tr>
+</tbody></table>
+<h3 id="MySQL-正则表达式核心语法表"><a href="#MySQL-正则表达式核心语法表" class="headerlink" title="MySQL 正则表达式核心语法表"></a>MySQL 正则表达式核心语法表</h3><table>
+<thead>
+<tr>
+<th align="left"><strong>分类</strong></th>
+<th align="left"><strong>模式/操作符</strong></th>
+<th align="left"><strong>描述</strong></th>
+<th align="left"><strong>示例</strong></th>
+<th align="left"><strong>注意事项</strong></th>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>基本操作符</strong></td>
+<td align="left"><code>REGEXP</code> 或 <code>RLIKE</code></td>
+<td align="left">正则匹配操作符</td>
+<td align="left"><code>SELECT * FROM table WHERE column REGEXP &#39;pattern&#39;;</code></td>
+<td align="left"><code>REGEXP</code> 和 <code>RLIKE</code> 完全等价，可互换使用</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td align="left"><strong>定位符</strong></td>
+<td align="left"><code>^</code></td>
+<td align="left">匹配字符串开头</td>
+<td align="left"><code>WHERE name REGEXP &#39;^st&#39;</code> → 以 “st” 开头的字符串</td>
+<td align="left">多行模式下 (<code>m</code>) 可匹配换行符后位置（MySQL 默认不支持多行模式）</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="left"><code>$</code></td>
+<td align="left">匹配字符串结尾</td>
+<td align="left"><code>WHERE name REGEXP &#39;ok$&#39;</code> → 以 “ok” 结尾的字符串</td>
+<td align="left"></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td align="left"><strong>通配符</strong></td>
+<td align="left"><code>.</code></td>
+<td align="left">匹配任意单个字符（除换行符）</td>
+<td align="left"><code>WHERE name REGEXP &#39;a.b&#39;</code> → 匹配 “aXb”、”a5b” 等</td>
+<td align="left">如需包含换行符，需使用 <code>[.\n]</code></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td align="left"><strong>字符集合</strong></td>
+<td align="left"><code>[...]</code></td>
+<td align="left">匹配括号内任意字符</td>
+<td align="left"><code>WHERE name REGEXP &#39;[aeiou]&#39;</code> → 包含任意元音字母的字符串</td>
+<td align="left">区分大小写（除非使用 <code>BINARY</code> 或设置大小写不敏感）</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="left"><code>[^...]</code></td>
+<td align="left">匹配不在括号内的任意字符</td>
+<td align="left"><code>WHERE name REGEXP &#39;[^0-9]&#39;</code> → 包含非数字字符的字符串</td>
+<td align="left"></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td align="left"><strong>量词</strong></td>
+<td align="left"><code>*</code></td>
+<td align="left">匹配前一个元素 0 次或多次</td>
+<td align="left"><code>WHERE name REGEXP &#39;zo*&#39;</code> → 匹配 “z”、”zoo”</td>
+<td align="left"></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="left"><code>+</code></td>
+<td align="left">匹配前一个元素 1 次或多次</td>
+<td align="left"><code>WHERE name REGEXP &#39;zo+&#39;</code> → 匹配 “zo”、”zoo”，但不匹配 “z”</td>
+<td align="left"></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="left"><code>&#123;n&#125;</code></td>
+<td align="left">精确匹配前一个元素 n 次</td>
+<td align="left"><code>WHERE name REGEXP &#39;o&#123;2&#125;&#39;</code> → 匹配 “food” 中的 “oo”</td>
+<td align="left"></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="left"><code>&#123;n,m&#125;</code></td>
+<td align="left">匹配前一个元素至少 n 次，最多 m 次</td>
+<td align="left"><code>WHERE name REGEXP &#39;o&#123;1,3&#125;&#39;</code> → 匹配 “book”、”foooood”</td>
+<td align="left"></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td align="left"><strong>逻辑或</strong></td>
+<td align="left">`</td>
+<td align="left">`</td>
+<td align="left">匹配多个模式之一</td>
+<td align="left">`WHERE name REGEXP ‘Smith</td>
+<td>Johnson’` → 匹配 “Smith” 或 “Johnson”</td>
+<td>可用括号分组：`(a</td>
+<td>b)c` → “ac” 或 “bc”</td>
+</tr>
+<tr>
+<td align="left"><strong>字符类</strong></td>
+<td align="left"><code>\d</code> 或 <code>[0-9]</code></td>
+<td align="left">匹配数字字符</td>
+<td align="left"><code>WHERE name REGEXP &#39;item\\d+&#39;</code> → 匹配 “item1”、”item20”</td>
+<td align="left">MySQL 中需双写反斜杠：<code>\\d</code></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="left"><code>\w</code></td>
+<td align="left">匹配字母、数字或下划线（等同于 <code>[a-zA-Z0-9_]</code>）</td>
+<td align="left"><code>WHERE name REGEXP &#39;\\w&#123;5&#125;&#39;</code> → 匹配5位字母数字组合</td>
+<td align="left"></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="left"><code>\s</code></td>
+<td align="left">匹配空白字符（空格、制表符、换行符等）</td>
+<td align="left"><code>WHERE text REGEXP &#39;\\s+&#39;</code> → 匹配包含空白符的字符串</td>
+<td align="left"></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td align="left"><strong>特殊功能</strong></td>
+<td align="left"><code>BINARY</code></td>
+<td align="left">区分大小写匹配</td>
+<td align="left"><code>WHERE name REGEXP BINARY &#39;Apple&#39;</code> → 仅匹配大写的 “Apple”</td>
+<td align="left">默认不区分大小写（依赖数据库配置）</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td align="left"><strong>复杂示例</strong></td>
+<td align="left">-</td>
+<td align="left">组合使用</td>
+<td align="left">`WHERE name REGEXP ‘^[aeiou]</td>
+<td align="left">ok$’` → 以元音开头或以 “ok” 结尾的字符串</td>
+<td>使用括号明确优先级：`^(abc</td>
+<td>def)`</td>
+<td></td>
+</tr>
+</tbody></table>
+<hr>
+<h3 id="常用场景示例表"><a href="#常用场景示例表" class="headerlink" title="常用场景示例表"></a>常用场景示例表</h3><table>
+<thead>
+<tr>
+<th align="left"><strong>场景</strong></th>
+<th align="left"><strong>正则表达式</strong></th>
+<th align="left"><strong>说明</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">匹配邮箱格式</td>
+<td align="left"><code>^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]&#123;2,&#125;$</code></td>
+<td align="left">验证基本邮箱格式</td>
+</tr>
+<tr>
+<td align="left">匹配手机号（11位数字）</td>
+<td align="left"><code>^1[3-9]\d&#123;9&#125;$</code></td>
+<td align="left">匹配中国大陆手机号</td>
+</tr>
+<tr>
+<td align="left">提取带序号的条目</td>
+<td align="left"><code>item\d+</code></td>
+<td align="left">匹配 “item1”、”item100” 等</td>
+</tr>
+<tr>
+<td align="left">过滤包含特殊字符的字段</td>
+<td align="left"><code>[&lt;&gt;#&amp;]</code></td>
+<td align="left">查找包含 HTML 特殊字符的记录</td>
+</tr>
+<tr>
+<td align="left">匹配日期格式（YYYY-MM-DD）</td>
+<td align="left"><code>^\d&#123;4&#125;-\d&#123;2&#125;-\d&#123;2&#125;$</code></td>
+<td align="left">验证基本日期格式（需结合具体日期逻辑进一步校验）</td>
+</tr>
+</tbody></table>
+<hr>
+<h3 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h3><ol>
+<li><strong>性能影响</strong>：正则表达式匹配比简单字符串匹配（如 <code>LIKE</code>）更消耗资源，避免在大数据表频繁使用。</li>
+<li><strong>转义字符</strong>：MySQL 中需用双反斜杠（<code>\\</code>）转义特殊字符（如 <code>\\d</code> 表示数字）。</li>
+<li><strong>大小写敏感</strong>：默认不区分大小写，如需区分需显式使用 <code>BINARY</code> 关键字。</li>
+<li><strong>部分功能限制</strong>：不支持某些高级正则特性（如回溯引用、零宽断言）。</li>
+</ol>
+<p>通过合理使用正则表达式，可以高效完成复杂文本匹配任务，但需注意其适用场景和性能影响。</p>
+<h3 id="事务"><a href="#事务" class="headerlink" title="事务"></a>事务</h3><p>事务是必须满足4个条件（ACID）：：原子性（<strong>原子</strong>性，或称分割性）、一致性（一致性）、隔离性（<strong>隔离</strong>性，行为独立性）、持久性（持久<strong>性</strong>）</p>
+<h3 id="MYSQL事务处理主要有两种方法："><a href="#MYSQL事务处理主要有两种方法：" class="headerlink" title="MYSQL事务处理主要有两种方法："></a>MYSQL事务处理主要有两种方法：</h3><p>1、用BEGIN、ROLLBACK、COMMIT来实现</p>
+<ul>
+<li><strong>BEGIN 或 START TRANSACTION</strong>：开用于开始一个事务。</li>
+<li><strong>ROLLBACK</strong>事务回滚，取消之前的更改。</li>
+<li><strong>COMMIT</strong>：事务确认，提交事务，使更改永久生效。</li>
+</ul>
+<p>2、直接用SET来改变MySQL的自动提交模式：</p>
+<ul>
+<li><strong>SET AUTOCOMMIT=0</strong> 禁止自动提交</li>
+<li><strong>SET AUTOCOMMIT=1</strong>开启自动提交</li>
+</ul>
+<p><strong>BEGIN 或 START TRANSACTION</strong> – 用于开始一个事务：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">开始; --或者使用START TRANSACTION ;  </span><br></pre></td></tr></table></figure>
+
+<p><strong>COMMIT</strong> – 对于提交事务，将所有的修改永久保存到数据库：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">犯罪;</span><br></pre></td></tr></table></figure>
+
+<p><strong>ROLLBACK</strong> – 用于回滚事务，撤销自上次提交以来所做的所有更改：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">回滚;</span><br></pre></td></tr></table></figure>
+
+<p><strong>SAVEPOINT</strong> – 用于在事务中设置保存点，晚些时候能够回滚到该点：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SAVEPOINT 保存点名称；</span><br></pre></td></tr></table></figure>
+
+<p><strong>ROLLBACK TO SAVEPOINT</strong> – 用于回滚到之前设置的保存点：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">回滚到保存点 savepoint_name ；</span><br></pre></td></tr></table></figure>
+
+<p>下面是一个简单的MySQL事务的例子：</p>
+<h2 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 开始事务</span></span><br><span class="line"><span class="keyword">START</span> TRANSACTION;</span><br><span class="line">#  <span class="keyword">BEGIN</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 执行一些SQL语句</span></span><br><span class="line"><span class="keyword">UPDATE</span> accounts <span class="keyword">SET</span> balance <span class="operator">=</span> balance <span class="operator">-</span> <span class="number">100</span> <span class="keyword">WHERE</span> user_id <span class="operator">=</span> <span class="number">1</span>;</span><br><span class="line"><span class="keyword">UPDATE</span> accounts <span class="keyword">SET</span> balance <span class="operator">=</span> balance <span class="operator">+</span> <span class="number">100</span> <span class="keyword">WHERE</span> user_id <span class="operator">=</span> <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 判断是否要提交还是回滚</span></span><br><span class="line">IF (条件) <span class="keyword">THEN</span></span><br><span class="line">    <span class="keyword">COMMIT</span>; <span class="comment">-- 提交事务</span></span><br><span class="line"><span class="keyword">ELSE</span></span><br><span class="line">    <span class="keyword">ROLLBACK</span>; <span class="comment">-- 回滚事务</span></span><br><span class="line"><span class="keyword">END</span> IF;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="MySQL-ALTER-命令操作汇总表"><a href="#MySQL-ALTER-命令操作汇总表" class="headerlink" title="MySQL ALTER 命令操作汇总表"></a>MySQL ALTER 命令操作汇总表</h3><p>当我们需要修改数据表名或者修改数据表字段时，就需要使用到 MySQL <strong>ALTER</strong> 命令。</p>
+<p>MySQL 的 <strong>ALTER</strong> 命令用于修改数据库、表和索引等对象的结构。</p>
+<p><strong>ALTER</strong> 命令允许你添加、修改或删除数据库对象，并且可以用于更改表的列定义、添加约束、创建和删除索引等操作。</p>
+<p>ALTER 命令非常强大，可以在数据库结构发生变化时进行灵活的修改和调整。</p>
+<table>
+<thead>
+<tr>
+<th align="left"><strong>分类</strong></th>
+<th align="left"><strong>操作类型</strong></th>
+<th align="left"><strong>语法</strong></th>
+<th align="left"><strong>示例</strong></th>
+<th align="left"><strong>注意事项</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>列操作</strong></td>
+<td align="left">添加列</td>
+<td align="left"><code>ALTER TABLE 表名 ADD COLUMN 列名 数据类型 [约束];</code></td>
+<td align="left"><code>ALTER TABLE employees ADD COLUMN birth_date DATE;</code></td>
+<td align="left">添加列时建议指定默认值或允许 NULL，避免现有数据冲突</td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="left">修改列数据类型</td>
+<td align="left"><code>ALTER TABLE 表名 MODIFY COLUMN 列名 新数据类型;</code></td>
+<td align="left"><code>ALTER TABLE employees MODIFY COLUMN salary DECIMAL(10,2);</code></td>
+<td align="left">修改数据类型可能导致数据截断（如 VARCHAR 长度减少）</td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="left">重命名列</td>
+<td align="left"><code>ALTER TABLE 表名 CHANGE COLUMN 旧列名 新列名 数据类型;</code></td>
+<td align="left"><code>ALTER TABLE employees CHANGE COLUMN old_name new_name VARCHAR(255);</code></td>
+<td align="left">必须同时指定新列的数据类型</td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="left">删除列</td>
+<td align="left"><code>ALTER TABLE 表名 DROP COLUMN 列名;</code></td>
+<td align="left"><code>ALTER TABLE employees DROP COLUMN birth_date;</code></td>
+<td align="left">删除列会永久丢失数据，操作前需备份</td>
+</tr>
+<tr>
+<td align="left"><strong>键约束</strong></td>
+<td align="left">添加主键</td>
+<td align="left"><code>ALTER TABLE 表名 ADD PRIMARY KEY (列名);</code></td>
+<td align="left"><code>ALTER TABLE employees ADD PRIMARY KEY (employee_id);</code></td>
+<td align="left">主键列必须为 NOT NULL 且唯一</td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="left">添加外键</td>
+<td align="left"><code>ALTER TABLE 子表 ADD CONSTRAINT 约束名 FOREIGN KEY (列名) REFERENCES 父表 (列名);</code></td>
+<td align="left"><code>ALTER TABLE orders ADD CONSTRAINT fk_customer FOREIGN KEY (customer_id) REFERENCES customers (customer_id);</code></td>
+<td align="left">外键列和父表列数据类型必须一致，且父表列需为唯一约束或主键</td>
+</tr>
+<tr>
+<td align="left"><strong>表操作</strong></td>
+<td align="left">重命名表</td>
+<td align="left"><code>ALTER TABLE 旧表名 RENAME TO 新表名;</code></td>
+<td align="left"><code>ALTER TABLE employees RENAME TO staff;</code></td>
+<td align="left">表名修改后，相关视图、存储过程需同步更新</td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="left">修改表字符集</td>
+<td align="left"><code>ALTER TABLE 表名 CONVERT TO CHARACTER SET 字符集;</code></td>
+<td align="left"><code>ALTER TABLE employees CONVERT TO CHARACTER SET utf8mb4;</code></td>
+<td align="left">转换字符集可能影响现有数据的存储，需谨慎操作</td>
+</tr>
+<tr>
+<td align="left"><strong>索引操作</strong></td>
+<td align="left">添加索引</td>
+<td align="left"><code>ALTER TABLE 表名 ADD INDEX 索引名 (列名);</code></td>
+<td align="left"><code>ALTER TABLE employees ADD INDEX idx_name (last_name);</code></td>
+<td align="left">可为单列或多列创建索引，提升查询性能</td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="left">删除索引</td>
+<td align="left"><code>ALTER TABLE 表名 DROP INDEX 索引名;</code></td>
+<td align="left"><code>ALTER TABLE employees DROP INDEX idx_name;</code></td>
+<td align="left">删除索引可能影响查询性能</td>
+</tr>
+<tr>
+<td align="left"><strong>其他操作</strong></td>
+<td align="left">设置自增初始值</td>
+<td align="left"><code>ALTER TABLE 表名 AUTO_INCREMENT = 初始值;</code></td>
+<td align="left"><code>ALTER TABLE employees AUTO_INCREMENT = 1000;</code></td>
+<td align="left">仅适用于包含 <code>AUTO_INCREMENT</code> 列的表</td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="left">添加表注释</td>
+<td align="left"><code>ALTER TABLE 表名 COMMENT &#39;注释内容&#39;;</code></td>
+<td align="left"><code>ALTER TABLE employees COMMENT &#39;员工信息表&#39;;</code></td>
+<td align="left">注释内容需用引号包裹</td>
+</tr>
+</tbody></table>
+<hr>
+<h3 id="关键注意事项"><a href="#关键注意事项" class="headerlink" title="关键注意事项"></a><strong>关键注意事项</strong></h3><ol>
+<li><strong>性能影响</strong>：<ul>
+<li>ALTER TABLE 可能触发表重建（如修改列类型、添加主键），对大表操作时会导致锁表，建议在低峰期执行。</li>
+<li>使用 <code>ALGORITHM=INPLACE</code> 或 <code>ALGORITHM=COPY</code> 可控制重建方式（需存储引擎支持）。</li>
+</ul>
+</li>
+<li><strong>数据安全</strong>：<ul>
+<li>执行 DROP COLUMN、RENAME TABLE 等高风险操作前，<strong>务必备份数据</strong>。</li>
+</ul>
+</li>
+<li><strong>外键约束</strong>：<ul>
+<li>添加外键时需确保父表存在且列匹配，否则操作失败。</li>
+</ul>
+</li>
+<li><strong>兼容性</strong>：<ul>
+<li>修改表结构可能导致应用程序兼容性问题（如字段名或类型变更）。</li>
+</ul>
+</li>
+</ol>
+<p>其他用法：</p>
+<p><strong>SQL_CALC_FOUND_ROWS</strong>：  MySQL 中的一个特殊修饰符，用于在分页查询时获取不考虑 <code>LIMIT</code> 限制的总行数。</p>
+<p><strong>GROUP_CONCAT</strong> : 是 MySQL 中的一个聚合函数，它<strong>将分组后的多行数据合并成一个字符串</strong>，通常用于需要将多行数据拼接成单行结果的场景。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GROUP_CONCAT(DISTINCT c.id SEPARATOR &quot; &quot;)</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">SELECT SQL_CALC_FOUND_ROWS a.id, a.article_name, a.poster, a.read_num, a.summary, a.create_time, a.update_time, u.nick_name AS author, GROUP_CONCAT(DISTINCT c.id SEPARATOR &quot; &quot;) AS categoryIDs, GROUP_CONCAT(DISTINCT c.category_name SEPARATOR &quot; &quot;) AS categoryNames, GROUP_CONCAT(DISTINCT t.id SEPARATOR &quot; &quot;) AS tagIDs, GROUP_CONCAT(DISTINCT t.tag_name SEPARATOR &quot; &quot;) AS tagNames FROM article a\</span><br><span class="line">        LEFT JOIN user u ON a.author_id = u.id\</span><br><span class="line">        LEFT JOIN article_category a_c ON a.id = a_c.article_id\</span><br><span class="line">        LEFT JOIN category c ON a_c.category_id = c.id\</span><br><span class="line">        LEFT JOIN article_tag a_t ON a.id = a_t.article_id\</span><br><span class="line">        LEFT JOIN tag t ON a_t.tag_id = t.id\</span><br><span class="line">        WHERE a.private = 0 AND a.deleted = 0\</span><br><span class="line">        GROUP BY a.id\</span><br><span class="line">        having a.id = any (SELECT article_id FROM article_tag WHERE tag_id = (SELECT id FROM tag WHERE tag_name = ?))\</span><br><span class="line">        ORDER BY a.create_time desc LIMIT ?, ?;\</span><br><span class="line">    SELECT FOUND_ROWS() AS total;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://ms-yip.github.io">ms.y</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://ms-yip.github.io/2024/10/11/mysql%E5%9F%BA%E7%A1%80/">https://ms-yip.github.io/2024/10/11/mysql%E5%9F%BA%E7%A1%80/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://ms-yip.github.io" target="_blank">珊珊的小本子</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="/img/bg6.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2024/10/12/personal-link/"><img class="prev-cover" src="/img/bg10.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">personal link</div></div></a></div><div class="next-post pull-right"><a href="/2024/07/28/RESTful-Api/"><img class="next-cover" src="/img/bg3.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">RESTful Api</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">ms.y</div><div class="author-info__description">竭尽所能成一事</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">140</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">45</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">25</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/ms-yip"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content is-expand"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%87%86%E5%A4%87"><span class="toc-number">1.</span> <span class="toc-text">准备</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E7%AC%A6%E5%8F%B7%E9%93%BE%E6%8E%A5%EF%BC%9A"><span class="toc-number">1.0.0.1.</span> <span class="toc-text">创建符号链接：</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8"><span class="toc-number">2.</span> <span class="toc-text">使用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4"><span class="toc-number">2.1.</span> <span class="toc-text">基础命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9B%B8%E5%85%B3%E5%91%BD%E4%BB%A4"><span class="toc-number">2.2.</span> <span class="toc-text">数据库相关命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E8%A1%A8%E7%9B%B8%E5%85%B3%E5%91%BD%E4%BB%A4"><span class="toc-number">2.3.</span> <span class="toc-text">数据表相关命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MySQL-%E4%BA%8B%E5%8A%A1%E7%9B%B8%E5%85%B3%E5%91%BD%E4%BB%A4"><span class="toc-number">2.4.</span> <span class="toc-text">MySQL 事务相关命令</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#MySQL-%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="toc-number">3.</span> <span class="toc-text">MySQL 数据类型</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E5%80%BC%E7%B1%BB%E5%9E%8B"><span class="toc-number">3.1.</span> <span class="toc-text">数值类型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%97%A5%E6%9C%9F%E5%92%8C%E6%97%B6%E9%97%B4%E7%B1%BB%E5%9E%8B"><span class="toc-number">3.2.</span> <span class="toc-text">日期和时间类型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%B1%BB%E5%9E%8B"><span class="toc-number">3.3.</span> <span class="toc-text">字符串类型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9E%9A%E4%B8%BE%E4%B8%8E%E9%9B%86%E5%90%88%E7%B1%BB%E5%9E%8B%EF%BC%88Enumeration-and-Set-Types%EF%BC%89"><span class="toc-number">3.4.</span> <span class="toc-text">枚举与集合类型（Enumeration and Set Types）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A9%BA%E9%97%B4%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%EF%BC%88Spatial-Data-Types%EF%BC%89"><span class="toc-number">3.5.</span> <span class="toc-text">空间数据类型（Spatial Data Types）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#where-%E5%AD%90%E5%8F%A5"><span class="toc-number">3.5.1.</span> <span class="toc-text">where 子句</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#ORDER-BY-%E6%8E%92%E5%BA%8F-%E8%AF%AD%E5%8F%A5"><span class="toc-number">4.</span> <span class="toc-text">ORDER BY(排序) 语句</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#MySQL-%E8%BF%9E%E6%8E%A5%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="toc-number">5.</span> <span class="toc-text">MySQL 连接的使用</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%91%98%E5%B7%A5%E8%A1%A8-employees"><span class="toc-number">5.0.0.1.</span> <span class="toc-text">员工表 employees</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%83%A8%E9%97%A8%E8%A1%A8-departments"><span class="toc-number">5.0.0.2.</span> <span class="toc-text">部门表 departments</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B7%E4%BD%93%E6%89%A7%E8%A1%8C%E7%BB%93%E6%9E%9C%E6%BC%94%E7%A4%BA"><span class="toc-number">5.0.1.</span> <span class="toc-text">具体执行结果演示</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-INNER-JOIN-%E7%BB%93%E6%9E%9C"><span class="toc-number">5.0.1.1.</span> <span class="toc-text">1. INNER JOIN 结果</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-LEFT-JOIN-%E7%BB%93%E6%9E%9C"><span class="toc-number">5.0.1.2.</span> <span class="toc-text">2. LEFT JOIN 结果</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-RIGHT-JOIN-%E7%BB%93%E6%9E%9C"><span class="toc-number">5.0.1.3.</span> <span class="toc-text">3. RIGHT JOIN 结果</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#MySQL-NULL-%E5%80%BC%E5%A4%84%E7%90%86"><span class="toc-number">6.</span> <span class="toc-text">MySQL NULL 值处理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#MySQL-%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%A0%B8%E5%BF%83%E8%AF%AD%E6%B3%95%E8%A1%A8"><span class="toc-number">6.0.1.</span> <span class="toc-text">MySQL 正则表达式核心语法表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E5%9C%BA%E6%99%AF%E7%A4%BA%E4%BE%8B%E8%A1%A8"><span class="toc-number">6.0.2.</span> <span class="toc-text">常用场景示例表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="toc-number">6.0.3.</span> <span class="toc-text">注意事项</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8B%E5%8A%A1"><span class="toc-number">6.0.4.</span> <span class="toc-text">事务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MYSQL%E4%BA%8B%E5%8A%A1%E5%A4%84%E7%90%86%E4%B8%BB%E8%A6%81%E6%9C%89%E4%B8%A4%E7%A7%8D%E6%96%B9%E6%B3%95%EF%BC%9A"><span class="toc-number">6.0.5.</span> <span class="toc-text">MYSQL事务处理主要有两种方法：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E4%BE%8B"><span class="toc-number">6.1.</span> <span class="toc-text">实例</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#MySQL-ALTER-%E5%91%BD%E4%BB%A4%E6%93%8D%E4%BD%9C%E6%B1%87%E6%80%BB%E8%A1%A8"><span class="toc-number">6.1.1.</span> <span class="toc-text">MySQL ALTER 命令操作汇总表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E9%94%AE%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="toc-number">6.1.2.</span> <span class="toc-text">关键注意事项</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2025/04/24/%E5%B9%BF%E7%94%B5%E8%BF%90%E9%80%9A%E6%95%B0%E5%AD%97%E6%B8%A0%E9%81%93%E5%BC%80%E5%8F%91%E5%B9%B3%E5%8F%B0/" title="开发平台"><img src="/img/bg3.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="开发平台"/></a><div class="content"><a class="title" href="/2025/04/24/%E5%B9%BF%E7%94%B5%E8%BF%90%E9%80%9A%E6%95%B0%E5%AD%97%E6%B8%A0%E9%81%93%E5%BC%80%E5%8F%91%E5%B9%B3%E5%8F%B0/" title="开发平台">开发平台</a><time datetime="2025-04-24T06:52:28.000Z" title="发表于 2025-04-24 14:52:28">2025-04-24</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/02/08/pyhton%E5%85%A5%E9%97%A8/" title="pyhton入门"><img src="/img/bg10.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="pyhton入门"/></a><div class="content"><a class="title" href="/2025/02/08/pyhton%E5%85%A5%E9%97%A8/" title="pyhton入门">pyhton入门</a><time datetime="2025-02-08T02:54:45.000Z" title="发表于 2025-02-08 10:54:45">2025-02-08</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/01/11/node%E4%BD%BF%E7%94%A8mysql/" title="node使用mysql"><img src="/img/bg6.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="node使用mysql"/></a><div class="content"><a class="title" href="/2025/01/11/node%E4%BD%BF%E7%94%A8mysql/" title="node使用mysql">node使用mysql</a><time datetime="2025-01-11T01:59:34.000Z" title="发表于 2025-01-11 09:59:34">2025-01-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/01/10/Express/" title="Express"><img src="/img/bg11.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Express"/></a><div class="content"><a class="title" href="/2025/01/10/Express/" title="Express">Express</a><time datetime="2025-01-10T01:28:05.000Z" title="发表于 2025-01-10 09:28:05">2025-01-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/11/06/threejs/" title="threejs"><img src="/img/bg10.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="threejs"/></a><div class="content"><a class="title" href="/2024/11/06/threejs/" title="threejs">threejs</a><time datetime="2024-11-06T06:17:39.000Z" title="发表于 2024-11-06 14:17:39">2024-11-06</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2025 By ms.y</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"></div><canvas class="fireworks" mobile="false"></canvas><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/fireworks.min.js"></script><script defer="defer" id="fluttering_ribbon" mobile="true" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-fluttering-ribbon.min.js"></script><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-nest.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
